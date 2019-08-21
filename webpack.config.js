@@ -22,7 +22,14 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['react']
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,

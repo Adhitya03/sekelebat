@@ -1,22 +1,24 @@
 <?php
 
-function sekelebat_load_scripts($hook) {
-	wp_enqueue_script( 'Headless-script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), '1.0', true );
+function sekelebat_load_scripts() {
+	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
+
+	wp_enqueue_script( 'sekelebat-script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), '1.0', true );
+
+	$url = trailingslashit( home_url() );
+	$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );
+
+	wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var SekelebatSettings = %s;', wp_json_encode( array(
+		'title' => get_bloginfo( 'name', 'display' ),
+		'path' => $path,
+		'URL' => array(
+			'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
+			'root' => esc_url_raw( $url ),
+		),
+
+	) ) ) );
 }
-add_action('wp_enqueue_scripts', 'sekelebat_load_scripts');
-
-$url = trailingslashit( home_url() );
-$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );
-
-wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var sekelebatSettings = %s;', wp_json_encode( array(
-	'title' => get_bloginfo( 'name', 'display' ),
-	'path' => $path,
-	'URL' => array(
-		'api' => esc_url_raw( get_rest_url( null, '/wp/v2' ) ),
-		'root' => esc_url_raw( $url ),
-	),
-) ) ) );
-
+add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
 
 function sekelebat_get_author_name( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
@@ -65,5 +67,24 @@ function sekelebat_register_fields() {
 	);
 }
 add_action( 'rest_api_init', 'sekelebat_register_fields' );
+
+
+function sekelebat_config(){
+
+	register_nav_menus(
+		array(
+			'primary' => __( 'Primary Menu', 'sekelebat' ),
+		)
+	);
+
+	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'align-wide' );
+	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'align-wide' );
+
+
+}
+add_action( 'after_setup_theme', 'sekelebat_config', 0 );
 
 ?>
