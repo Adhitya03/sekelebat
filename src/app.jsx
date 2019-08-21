@@ -4,10 +4,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './header';
 import Aux from './hoc/Auxiliary';
+import Dummy from './dummy';
+import Index from './index';
+
+import './style.css';
 
 const App = () => (
     <Aux>
         <Header />
+        <Switch>
+            <Route exact path={SekelebatSettings.path} component={Index} />
+            <Route path={SekelebatSettings.path + ':slug'} component={Dummy} />
+            <Route path={SekelebatSettings.path + ':slug/:slug'} component={Dummy} />
+        </Switch>
     </Aux>
 );
 

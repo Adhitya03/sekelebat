@@ -24,8 +24,10 @@
 	</head>
 	<body <?php body_class(); ?>>
 	<?php wp_body_open(); ?>
-	<div id="page">
-		<div class="loader"></div>
+    <div class="container">
+        <div id="page">
+            <div class="loader"></div>
+        </div>
 	</div>
 	<?php wp_footer(); ?>
 	</body>

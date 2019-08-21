@@ -11,11 +11,7 @@ function sekelebat_load_scripts() {
 	wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var SekelebatSettings = %s;', wp_json_encode( array(
 		'title' => get_bloginfo( 'name', 'display' ),
 		'path' => $path,
-		'URL' => array(
-			'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
-			'root' => esc_url_raw( $url ),
-		),
-
+		'domain' =>  esc_url_raw( $url ),
 	) ) ) );
 }
 add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
