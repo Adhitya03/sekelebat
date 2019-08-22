@@ -32,6 +32,16 @@ function sekelebat_published_date( $object, $field_name, $request ) {
 	return get_the_time('F j, Y');
 }
 
+function sekelebar_post_categories( $object, $field_name, $request ){
+
+	$postCategory = [];
+	foreach ( (array)$object['categories'] as $category ){
+		array_push( $postCategory, [ get_category( $category )->name , get_category( $category )->slug ] );
+	}
+
+	return $postCategory;
+}
+
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
 	// Add Author Name
@@ -57,6 +67,16 @@ function sekelebat_register_fields() {
 		'published_date',
 		array(
 			'get_callback'      => 'sekelebat_published_date',
+			'update_callback'   => null,
+			'schema'            => null
+		)
+	);
+
+	// Add Post Category
+	register_rest_field( 'post',
+		'post_categories',
+		array(
+			'get_callback'      => 'sekelebar_post_categories',
 			'update_callback'   => null,
 			'schema'            => null
 		)
