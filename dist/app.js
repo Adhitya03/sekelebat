@@ -34344,7 +34344,7 @@ class Single extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
+    shouldComponentUpdate() {
         return this.state.url !== window.location.href;
     }
 
@@ -34575,12 +34575,17 @@ class Index extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         super(props);
         this.state = {
             posts: [],
-            url: null
+            url: null,
+            loadedPost: false
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextState.posts !== this.state.posts;
+    shouldComponentUpdate() {
+        return this.state.url !== window.location.href;
+    }
+
+    componentDidUpdate() {
+        this.fetchPost();
     }
 
     componentDidMount() {
@@ -34602,16 +34607,38 @@ class Index extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
             }
             return response.json();
         }).then(result => {
-            this.setState({ posts: result, url: window.location.href });
-            console.log(url);
+            this.setState({ posts: result, url: window.location.href, loadedPost: true });
         });
     }
 
     render() {
 
-        console.log("Index Called");
+        let content = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'loading' },
+            'Loading  gan'
+        );
+        if (this.state.loadedPost) {
+            content = this.state.posts.map(el => {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__component_content_content__["a" /* default */], {
+                    key: el.id,
+                    title: el.title['rendered'],
+                    categories: el.sekelebat_post_categories,
+                    tag: el.sekelebat_post_tags,
+                    excerpt: el.content['rendered'],
+                    featuredImage: el.sekelebat_featured_image_src,
+                    author: el.sekelebat_author_name,
+                    date: el.sekelebat_published_date,
+                    link: el.link
+                });
+            });
+        }
 
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { id: 'posts', className: 'col-12 col-md-8' });
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { id: 'posts', className: 'col-12 col-md-8' },
+            content
+        );
     }
 
 }

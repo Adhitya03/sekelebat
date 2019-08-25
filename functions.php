@@ -65,7 +65,9 @@ function post_route_handler( $data )
 
 function category_route_handler( $data )
 {
-	$request = new WP_REST_Request( 'GET', '/wp/v2/posts?categories='.url_to_postid( $data['url'] ) );
+	$categoryID = get_category_by_slug(str_replace( array(site_url().'/category/', '/'),'', $data['url']))->cat_ID;
+	$url = site_url().'/wp-json/wp/v2/posts?categories='.$categoryID;
+	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
 	$post = $response->data;
 
@@ -74,11 +76,15 @@ function category_route_handler( $data )
 
 function tag_route_handler( $data )
 {
-	$request = new WP_REST_Request( 'GET', '/wp/v2/posts?tags='.url_to_postid( $data['url'] ) );
+	$tagSlug = str_replace( array(site_url().'/tag/', '/'),'', $data['url']);
+	$tagID = get_term_by( 'slug', $tagSlug, 'post_tag' )->term_id;
+	$url = site_url().'/wp-json/wp/v2/posts?tags='.$tagID;
+	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
 	$post = $response->data;
 
 	return $post;
+
 }
 
 // Add various fields to the JSON output
@@ -131,17 +137,17 @@ function sekelebat_register_fields() {
 	);
 
 	// Custom EndPoint
-	register_rest_route('sekelebat/v1', '/post/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+	register_rest_route('sekelebat/v1', '/post/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'post_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/category/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+	register_rest_route('sekelebat/v1', '/category/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'category_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'tag_route_handler',
 	));

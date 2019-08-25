@@ -13,7 +13,7 @@ class Single extends Component {
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
+    shouldComponentUpdate() {
         return this.state.url !== window.location.href;
     }
 

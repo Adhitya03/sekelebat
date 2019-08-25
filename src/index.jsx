@@ -7,12 +7,17 @@ class Index extends Component{
         super(props);
         this.state = {
             posts: [],
-            url: null
+            url: null,
+            loadedPost: false
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextState.posts !== this.state.posts;
+    shouldComponentUpdate() {
+        return this.state.url !== window.location.href;
+    }
+
+    componentDidUpdate() {
+        this.fetchPost();
     }
 
     componentDidMount() {
@@ -35,20 +40,34 @@ class Index extends Component{
                 }
                 return response.json();
             } ).then( result => {
-            this.setState({posts: result, url: window.location.href});
-            console.log(url);
+            this.setState({posts: result, url: window.location.href, loadedPost: true});
         } )
     }
 
     render() {
 
-
-
-        console.log("Index Called");
+        let content = <div className="loading">Loading  gan</div>;
+        if( this.state.loadedPost ) {
+            content = this.state.posts.map( el => {
+                return (
+                    <Content
+                        key={el.id}
+                        title={el.title['rendered']}
+                        categories={el.sekelebat_post_categories}
+                        tag={el.sekelebat_post_tags}
+                        excerpt={el.content['rendered']}
+                        featuredImage={el.sekelebat_featured_image_src}
+                        author={el.sekelebat_author_name}
+                        date={el.sekelebat_published_date}
+                        link={el.link}
+                    />
+                );
+            } );
+        }
 
         return (
             <div id="posts" className="col-12 col-md-8">
-
+                {content}
             </div>
         );
     }
