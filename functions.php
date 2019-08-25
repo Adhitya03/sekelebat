@@ -16,11 +16,11 @@ function sekelebat_load_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
 
-function sekelebat_get_author_name( $object, $field_name, $request ) {
+function get_sekelebat_get_author_name( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
 }
 
-function sekelebat_get_image_src( $object, $field_name, $request ) {
+function get_sekelebat_get_image_src( $object, $field_name, $request ) {
 	if($object[ 'featured_media' ] == 0) {
 		return $object[ 'featured_media' ];
 	}
@@ -28,11 +28,11 @@ function sekelebat_get_image_src( $object, $field_name, $request ) {
 	return $feat_img_array[0];
 }
 
-function sekelebat_published_date( $object, $field_name, $request ) {
+function get_sekelebat_published_date( $object, $field_name, $request ) {
 	return get_the_time('F j, Y');
 }
 
-function sekelebar_post_categories( $object, $field_name, $request ){
+function get_sekelebat_post_categories( $object, $field_name, $request ){
 
 	$postCategory = [];
 	foreach ( (array)$object['categories'] as $category ){
@@ -42,31 +42,70 @@ function sekelebar_post_categories( $object, $field_name, $request ){
 	return $postCategory;
 }
 
+function get_sekelebat_post_tags( $object, $field_name, $request ){
+
+	$postTag = [];
+	foreach ( (array)$object['tags'] as $tag ){
+		array_push( $postTag, [ get_tag( $tag )->name , get_tag( $tag )->slug ] );
+	}
+
+	return $postTag;
+}
+
+function post_route_handler( $data )
+{
+	$postType = get_post_type( url_to_postid( $data['url'] ) );
+	$route = $postType === 'post' ? '/wp/v2/posts/'.url_to_postid( $data['url'] ) : '/wp/v2/pages/'.url_to_postid( $data['url'] );
+	$request = new WP_REST_Request( 'GET', $route );
+	$response = rest_do_request( $request );
+	$post = $response->data;
+
+	return $post;
+}
+
+function category_route_handler( $data )
+{
+	$request = new WP_REST_Request( 'GET', '/wp/v2/posts?categories='.url_to_postid( $data['url'] ) );
+	$response = rest_do_request( $request );
+	$post = $response->data;
+
+	return $post;
+}
+
+function tag_route_handler( $data )
+{
+	$request = new WP_REST_Request( 'GET', '/wp/v2/posts?tags='.url_to_postid( $data['url'] ) );
+	$response = rest_do_request( $request );
+	$post = $response->data;
+
+	return $post;
+}
+
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
 	// Add Author Name
-	register_rest_field( 'post',
-		'author_name',
+	register_rest_field( array( 'post', 'page' ),
+		'sekelebat_author_name',
 		array(
-			'get_callback'      => 'sekelebat_get_author_name',
+			'get_callback'      => 'get_sekelebat_get_author_name',
 			'update_callback'   => null,
 			'schema'            => null
 		)
 	);
 	// Add Featured Image
-	register_rest_field( 'post',
-		'featured_image_src',
+	register_rest_field( array( 'post', 'page' ),
+		'sekelebat_featured_image',
 		array(
-			'get_callback'      => 'sekelebat_get_image_src',
+			'get_callback'      => 'get_sekelebat_get_image_src',
 			'update_callback'   => null,
 			'schema'            => null
 		)
 	);
 	// Add Published Date
-	register_rest_field( 'post',
-		'published_date',
+	register_rest_field( array( 'post', 'page' ),
+		'sekelebat_published_date',
 		array(
-			'get_callback'      => 'sekelebat_published_date',
+			'get_callback'      => 'get_sekelebat_published_date',
 			'update_callback'   => null,
 			'schema'            => null
 		)
@@ -74,16 +113,40 @@ function sekelebat_register_fields() {
 
 	// Add Post Category
 	register_rest_field( 'post',
-		'post_categories',
+		'sekelebat_post_categories',
 		array(
-			'get_callback'      => 'sekelebar_post_categories',
+			'get_callback'      => 'get_sekelebat_post_categories',
 			'update_callback'   => null,
 			'schema'            => null
 		)
 	);
+
+	register_rest_field( 'post',
+		'sekelebat_post_tags',
+		array(
+			'get_callback'      => 'get_sekelebat_post_tags',
+			'update_callback'   => null,
+			'schema'            => null
+		)
+	);
+
+	// Custom EndPoint
+	register_rest_route('sekelebat/v1', '/post/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+		'methods' => 'GET',
+		'callback' => 'post_route_handler',
+	));
+
+	register_rest_route('sekelebat/v1', '/category/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+		'methods' => 'GET',
+		'callback' => 'category_route_handler',
+	));
+
+	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:]+)', array(
+		'methods' => 'GET',
+		'callback' => 'tag_route_handler',
+	));
 }
 add_action( 'rest_api_init', 'sekelebat_register_fields' );
-
 
 function sekelebat_config(){
 
@@ -98,7 +161,6 @@ function sekelebat_config(){
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'align-wide' );
-
 
 }
 add_action( 'after_setup_theme', 'sekelebat_config', 0 );

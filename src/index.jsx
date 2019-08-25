@@ -1,48 +1,54 @@
 import React, { Component } from 'react';
-
-import Content from './container/content/content';
+import Content from './component/content/content';
 
 class Index extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            url: null
         };
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextState.posts !== this.state.posts;
+    }
+
     componentDidMount() {
-        fetch(SekelebatSettings.domain +  "/wp-json/wp/v2/posts")
+        this.fetchPost();
+    }
+
+    fetchPost(){
+
+        let url = SekelebatSettings.domain +  "/wp-json/wp/v2/posts";
+        if( window.location.href.split(SekelebatSettings.domain)[1].split('/')[0] === "category" ){
+            url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/category/" + window.location.href;
+        }else if( window.location.href.split(SekelebatSettings.domain)[1].split('/')[0] === "tag" ){
+            url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/tag/" + window.location.href;
+        }
+
+        fetch( url )
             .then( response => {
                 if ( !response.ok ) {
                     throw Error(response.statusText);
                 }
                 return response.json();
             } ).then( result => {
-                this.setState({posts: result});
-                console.log(result);
+            this.setState({posts: result, url: window.location.href});
+            console.log(url);
         } )
     }
 
     render() {
 
-        const posts = this.state.posts.map( el => {
-            return(
-                <Content
-                    key={el.id}
-                    title={el.title['rendered']}
-                    featuredImage={el.featured_image_src}
-                    date={el.published_date}
-                    author={el.author_name}
-                    link={el.link}
-                    categories={el.post_categories}
-                />
-            );
-        } );
+
+
+        console.log("Index Called");
 
         return (
             <div id="posts" className="col-12 col-md-8">
-                {posts}
+
             </div>
         );
     }

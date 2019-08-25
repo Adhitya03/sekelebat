@@ -10,6 +10,10 @@ class Header extends Component{
         };
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextState.menus !== this.state.menus;
+    }
+
     componentDidMount() {
         this.fetchMenu();
     }
@@ -22,18 +26,19 @@ class Header extends Component{
                 }
                 return response.json();
             })
-            .then(res => {
-                this.setState({menus: res.items});
+            .then(result => {
+                this.setState( { menus: result.items } );
             });
-        console.log("Header");
     };
 
     render() {
 
+        let postType = '';
         const menus = this.state.menus.map( (el) =>{
+
             return(
                 <li key={el.ID} className="nav-item">
-                    <Link to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
+                    <Link to={SekelebatSettings.path + postType + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
                         {el.title}
                     </Link>
                 </li>);
