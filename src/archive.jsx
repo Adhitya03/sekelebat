@@ -32,11 +32,13 @@ class Archive extends Component{
     fetchPosts(){
         let postList = '';
         let type = 'category';
+        let taxType = 'categories';
         if( window.location.href.split(SekelebatSettings.domain)[1].split('/')[0] === "tag" ){
-            let type = 'tag';
+            type = 'tag';
+            taxType = 'tags';
         }
 
-        fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type +"/" + window.location.href )
+        fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + window.location.href )
             .then( response => {
                 if ( !response.ok ) {
                     throw Error(response.statusText);
@@ -45,7 +47,7 @@ class Archive extends Component{
             } )
             .then( result => {
                 postList = result[1];
-                let taxUrl = SekelebatSettings.domain +  "/wp-json/wp/v2/categories/" + result[0];
+                let taxUrl = SekelebatSettings.domain +  "/wp-json/wp/v2/"+ taxType + "/" + result[0];
                 fetch( taxUrl ).then( webResponse => {
                     if ( !webResponse.ok ) {
                         throw Error(webResponse.statusText);
