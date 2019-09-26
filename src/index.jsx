@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import {Helmet} from "react-helmet/es/Helmet";
+
 import Content from './component/content/content';
+import Aux from './hoc/Auxiliary';
 
 class Index extends Component{
 
@@ -7,6 +10,7 @@ class Index extends Component{
         super(props);
         this.state = {
             posts: [],
+            webInfo: [],
             url: null,
             loadedPost: false
         };
@@ -17,21 +21,16 @@ class Index extends Component{
     }
 
     componentDidUpdate() {
-        this.fetchPost();
+        this.fetchPosts();
     }
 
     componentDidMount() {
-        this.fetchPost();
+        this.fetchPosts();
     }
 
-    fetchPost(){
-
+    fetchPosts(){
+        let postList = '';
         let url = SekelebatSettings.domain +  "/wp-json/wp/v2/posts";
-        if( window.location.href.split(SekelebatSettings.domain)[1].split('/')[0] === "category" ){
-            url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/category/" + window.location.href;
-        }else if( window.location.href.split(SekelebatSettings.domain)[1].split('/')[0] === "tag" ){
-            url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/tag/" + window.location.href;
-        }
 
         fetch( url )
             .then( response => {
@@ -40,13 +39,23 @@ class Index extends Component{
                 }
                 return response.json();
             } ).then( result => {
-            this.setState({posts: result, url: window.location.href, loadedPost: true});
+            postList = result;
+            let webUrl = SekelebatSettings.domain +  "/wp-json/";
+            fetch( webUrl ).then( webResponse => {
+                if ( !webResponse.ok ) {
+                    throw Error(webResponse.statusText);
+                }
+                return webResponse.json();
+            } ).then( webResult => {
+                this.setState({posts: postList, webInfo: webResult, url: window.location.href, loadedPost: true});
+            } )
         } )
     }
 
     render() {
 
         let content = <div className="loading">Loading  gan</div>;
+        let webInfoTitle = '';
         if( this.state.loadedPost ) {
             content = this.state.posts.map( el => {
                 return (
@@ -55,20 +64,26 @@ class Index extends Component{
                         title={el.title['rendered']}
                         categories={el.sekelebat_post_categories}
                         tag={el.sekelebat_post_tags}
-                        excerpt={el.content['rendered']}
-                        featuredImage={el.sekelebat_featured_image_src}
+                        excerpt={el.excerpt['rendered']}
+                        featuredImage={el.sekelebat_featured_image}
                         author={el.sekelebat_author_name}
                         date={el.sekelebat_published_date}
                         link={el.link}
                     />
                 );
             } );
+            webInfoTitle = this.state.webInfo['name'] + ' - ' + this.state.webInfo['description'];
         }
 
         return (
-            <div id="posts" className="col-12 col-md-8">
-                {content}
-            </div>
+            <Aux>
+                <Helmet>
+                    <title>{webInfoTitle}</title>
+                </Helmet>
+                <div id="posts" className="col-12 col-md-8">
+                    {content}
+                </div>
+            </Aux>
         );
     }
 

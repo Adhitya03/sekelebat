@@ -1,5 +1,40 @@
 <?php
 
+// Remove title
+remove_action('wp_head', '_wp_render_title_tag', '1');
+
+// Remove Yoast Meta SEO will call using react-helmet
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if (is_plugin_active('wordpress-seo/wp-seo.php')) {
+	function sekelebat_remove_yoast_meta($filter){
+		return false;
+	}
+
+	add_filter( 'wpseo_title', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_robots', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_canonical', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_locale', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_title', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_desc', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_url', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_type', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_image', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_image_size', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_site_name', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_author_facebook', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_opengraph_show_publish_date', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_card_type', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_title', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_description', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_site', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_image', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_twitter_creator_account', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_json_ld_output', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_next_rel_link', 'sekelebat_remove_yoast_meta');
+	add_filter( 'wpseo_prev_rel_link', 'sekelebat_remove_yoast_meta');
+}
+
 function sekelebat_load_scripts() {
 	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
 
@@ -24,7 +59,7 @@ function get_sekelebat_get_image_src( $object, $field_name, $request ) {
 	if($object[ 'featured_media' ] == 0) {
 		return $object[ 'featured_media' ];
 	}
-	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'thumbnail', true );
+	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'large', true );
 	return $feat_img_array[0];
 }
 
@@ -71,7 +106,7 @@ function category_route_handler( $data )
 	$response = rest_do_request( $request );
 	$post = $response->data;
 
-	return $post;
+	return array($categoryID, $post, get_bloginfo( 'name' ));
 }
 
 function tag_route_handler( $data )
@@ -83,12 +118,13 @@ function tag_route_handler( $data )
 	$response = rest_do_request( $request );
 	$post = $response->data;
 
-	return $post;
+	return array($tagID, $post, get_bloginfo( 'name' ));
 
 }
 
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
+
 	// Add Author Name
 	register_rest_field( array( 'post', 'page' ),
 		'sekelebat_author_name',

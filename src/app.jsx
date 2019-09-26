@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 import Header from './header';
 import Aux from './hoc/Auxiliary';
@@ -14,11 +15,10 @@ const App = () => (
     <Aux>
         <Header />
         <div className="row">
+            <Route exact path={SekelebatSettings.path} component={Index} />
             <Switch>
-                <Route exact path={SekelebatSettings.path} component={Index} />
-                <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Index} />
+                <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                 <Route path={SekelebatSettings.path + ':slug'} component={Single} />
-                {/*<Route exact path={SekelebatSettings.path + ':slug/:slug'} component={Dummy} />*/}
             </Switch>
             {/*//Sidebar*/}
         </div>
