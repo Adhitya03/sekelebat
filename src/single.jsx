@@ -47,12 +47,23 @@ class Single extends Component {
         console.log(this.state.post);
 
         let content = <div className="loading">Loading  gan</div>;
-        let title = '';
         let meta = '';
+        let metas = '';
         if( this.state.loadedPost ){
-            title = this.state.post.yoast_meta[2]['content'];
             if( this.state.post.type === 'post' ){
-                meta = <PostMeta metaData={this.state.post.yoast_meta} />;
+                let post_title = '';
+                if(this.state.post.yoast_meta.length === 0){
+                    metas = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                }else{
+                    if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                        post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    }else{
+                        post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                    }
+                    this.state.post.yoast_meta.push(post_title);
+                    metas = this.state.post.yoast_meta;
+                }
+                meta = <PostMeta metaData={metas} />;
                 content = <ContentSingle
                     title={this.state.post.title['rendered']}
                     categories={this.state.post.sekelebat_post_categories}
@@ -63,9 +74,19 @@ class Single extends Component {
                     date={this.state.post.sekelebat_published_date}
                 />;
             }else if(this.state.post.type === 'page'){
-                let page_title = {pgtitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['content']};
-                this.state.post.yoast_meta.push(page_title);
-                meta = <Pagemeta metaData={this.state.post.yoast_meta} />;
+                let page_title = '';
+                if(this.state.post.yoast_meta.length === 0){
+                    metas = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                }else{
+                    if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                        page_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    }else{
+                        page_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                    }
+                    this.state.post.yoast_meta.push(page_title);
+                    metas = this.state.post.yoast_meta;
+                }
+                meta = <Pagemeta metaData={metas} />;
                 content = <ContentPage
                     title={this.state.post.title['rendered']}
                     content={this.state.post.content['rendered']}

@@ -35982,12 +35982,23 @@ class Single extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
             { className: 'loading' },
             'Loading  gan'
         );
-        let title = '';
         let meta = '';
+        let metas = '';
         if (this.state.loadedPost) {
-            title = this.state.post.yoast_meta[2]['content'];
             if (this.state.post.type === 'post') {
-                meta = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__component_wp_head_post_meta__["a" /* default */], { metaData: this.state.post.yoast_meta });
+                let post_title = '';
+                if (this.state.post.yoast_meta.length === 0) {
+                    metas = { postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo };
+                } else {
+                    if (this.state.post.yoast_meta[3]['og:title'] === undefined) {
+                        post_title = { postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo };
+                    } else {
+                        post_title = { postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title'] };
+                    }
+                    this.state.post.yoast_meta.push(post_title);
+                    metas = this.state.post.yoast_meta;
+                }
+                meta = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__component_wp_head_post_meta__["a" /* default */], { metaData: metas });
                 content = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__component_content_content_single__["a" /* default */], {
                     title: this.state.post.title['rendered'],
                     categories: this.state.post.sekelebat_post_categories,
@@ -35998,9 +36009,19 @@ class Single extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                     date: this.state.post.sekelebat_published_date
                 });
             } else if (this.state.post.type === 'page') {
-                let page_title = { pgtitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['content'] };
-                this.state.post.yoast_meta.push(page_title);
-                meta = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__component_wp_head_page_meta__["a" /* default */], { metaData: this.state.post.yoast_meta });
+                let page_title = '';
+                if (this.state.post.yoast_meta.length === 0) {
+                    metas = { pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo };
+                } else {
+                    if (this.state.post.yoast_meta[3]['og:title'] === undefined) {
+                        page_title = { postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo };
+                    } else {
+                        page_title = { postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title'] };
+                    }
+                    this.state.post.yoast_meta.push(page_title);
+                    metas = this.state.post.yoast_meta;
+                }
+                meta = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__component_wp_head_page_meta__["a" /* default */], { metaData: metas });
                 content = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__component_content_content_page__["a" /* default */], {
                     title: this.state.post.title['rendered'],
                     content: this.state.post.content['rendered'],
@@ -36190,19 +36211,15 @@ const contentPage = props => {
 
 const postMeta = props => {
 
-    if (props.metaData.length === 0 || props.metaData === undefined) {
-        return null;
-    }
-
     let title = '';
+    console.log(props.metaData);
     const wpseo_head = Object.keys(props.metaData).map(el => {
         if (Object.keys(props.metaData[el])[0] === 'name') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('meta', { key: props.metaData[el]['name'], name: props.metaData[el]['name'], content: props.metaData[el]['content'] });
-        } else {
-            if (props.metaData[el]['property'] === 'og:title') {
-                title = props.metaData[el]['content'];
-            }
+        } else if (Object.keys(props.metaData[el])[0] === 'property') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('meta', { key: props.metaData[el]['property'], property: props.metaData[el]['property'], content: props.metaData[el]['content'] });
+        } else {
+            title = props.metaData[el]['postTitle'];
         }
     });
 
@@ -36783,7 +36800,7 @@ const pageMeta = props => {
         } else if (Object.keys(props.metaData[el])[0] === 'property') {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('meta', { key: props.metaData[el]['property'], property: props.metaData[el]['property'], content: props.metaData[el]['content'] });
         } else {
-            title = props.metaData[el]['pgtitle'];
+            title = props.metaData[el]['pageTitle'];
         }
     });
 

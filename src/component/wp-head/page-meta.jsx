@@ -14,7 +14,7 @@ const pageMeta = (props ) => {
                 <meta key={props.metaData[el]['property']} property={props.metaData[el]['property']} content={props.metaData[el]['content']}/>
             );
         }else{
-            title = props.metaData[el]['pgtitle'];
+            title = props.metaData[el]['pageTitle'];
         }
     });
 

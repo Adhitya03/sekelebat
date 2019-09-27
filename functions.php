@@ -51,6 +51,10 @@ function sekelebat_load_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
 
+function get_sekelebat_webinfo() {
+	return get_bloginfo('name');
+}
+
 function get_sekelebat_get_author_name( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
 }
@@ -124,6 +128,16 @@ function tag_route_handler( $data )
 
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
+
+	// Add Author Name
+	register_rest_field( array( 'post', 'page' ),
+		'sekelebat_webinfo',
+		array(
+			'get_callback'      => 'get_sekelebat_webinfo',
+			'update_callback'   => null,
+			'schema'            => null
+		)
+	);
 
 	// Add Author Name
 	register_rest_field( array( 'post', 'page' ),
