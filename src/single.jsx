@@ -8,8 +8,8 @@ import Pagemeta from './component/wp-head/page-meta';
 
 class Single extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor( props ) {
+        super( props );
         this.state = {
             post: [],
             url: null,
@@ -79,9 +79,9 @@ class Single extends Component {
                     metas = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                 }else{
                     if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
-                        page_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                        page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                     }else{
-                        page_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                        page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
                     }
                     this.state.post.yoast_meta.push(page_title);
                     metas = this.state.post.yoast_meta;

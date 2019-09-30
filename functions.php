@@ -221,4 +221,22 @@ function sekelebat_config(){
 }
 add_action( 'after_setup_theme', 'sekelebat_config', 0 );
 
+// registering sidebar
+function buildx_sidebar(){
+
+	register_sidebar(
+		array(
+			'name' => 'Sidebar',
+			'id' => 'sidebar-area',
+			'description' => esc_html__( 'This is the blog sidebar. You can add your widgets here', 'buildx' ),
+			'before_widget' => '<div class="widget-wrapper">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>'
+		)
+	);
+
+}
+add_action('widgets_init', 'buildx_sidebar');
+
 ?>

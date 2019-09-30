@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet/es/Helmet";
 const postMeta = ( props ) => {
 
     let title = '';
-    console.log(props.metaData);
     const wpseo_head = Object.keys(props.metaData).map((el) => {
        if(Object.keys(props.metaData[el])[0] === 'name'){
            return(

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Header extends Component{
 
@@ -33,15 +33,25 @@ class Header extends Component{
 
     render() {
 
-        let postType = '';
-        const menus = this.state.menus.map( (el) =>{
+        let anchor = '';
+        let ref = '';
+        const menuItem = this.state.menus.map( (el) =>{
+            if( el.url.includes(SekelebatSettings.domain) ){
+                return(
+                    <li key={el.ID} className="nav-item">
+                        <NavLink to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
+                            {el.title}
+                        </NavLink>
+                    </li>);
+            }else{
+                return(
+                    <li key={el.ID} className="nav-item">
+                        <a href={el.url} className="nav-link">
+                            {el.title}
+                        </a>
+                    </li>);
+            }
 
-            return(
-                <li key={el.ID} className="nav-item">
-                    <Link to={SekelebatSettings.path + postType + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
-                        {el.title}
-                    </Link>
-                </li>);
         });
 
         return(
@@ -50,7 +60,7 @@ class Header extends Component{
                     <div className="row w-100">
                         <div className="col-12">
                             <h1 className="site-title text-center">
-                                <Link to={SekelebatSettings.path}>Sekelebat</Link>
+                                <a href={SekelebatSettings.path}>Sekelebat</a>
                             </h1>
                         </div>
                         <div className="col-12">
@@ -65,7 +75,7 @@ class Header extends Component{
                             </button>
                             <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                                 <ul className="navbar-nav">
-                                    {menus}
+                                    {menuItem}
                                 </ul>
                             </div>
                         </div>
