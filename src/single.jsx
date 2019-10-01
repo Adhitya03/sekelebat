@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import ContentSingle from './component/content/content-single';
+import { Redirect } from "react-router-dom";
 
+import ContentSingle from './component/content/content-single';
 import ContentPage from './component/content/content-page';
 import Aux from './hoc/Auxiliary';
 import PostMeta from './component/wp-head/post-meta';
@@ -44,12 +45,14 @@ class Single extends Component {
 
     render() {
 
-        console.log(this.state.post);
+
 
         let content = <div className="loading">Loading  gan</div>;
         let meta = '';
         let metas = '';
+        let notFound = '';
         if( this.state.loadedPost ){
+
             if( this.state.post.type === 'post' ){
                 let post_title = '';
                 if(this.state.post.yoast_meta.length === 0){
@@ -94,12 +97,14 @@ class Single extends Component {
                     author={this.state.post.sekelebat_author_name}
                     date={this.state.post.sekelebat_published_date}
                 />;
+            }else if( this.state.post.data['status'] === 404 ){
+                notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
             }
-
         }
 
         return (
             <Aux>
+                {notFound}
                 {meta}
                 <div id="single" className="col-12 col-md-8">
                     {content}

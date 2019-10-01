@@ -61,8 +61,6 @@ class Archive extends Component{
 
     render() {
 
-        console.log(this.state.taxInfo);
-
         let content = <div className="loading">Loading  gan</div>;
         let taxTitle = '';
         if( this.state.loadedPost ) {

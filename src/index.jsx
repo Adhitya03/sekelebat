@@ -12,6 +12,7 @@ class Index extends Component{
             posts: [],
             webInfo: [],
             url: null,
+            totalPages: null,
             loadedPost: false
         };
     }

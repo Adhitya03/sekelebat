@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Header extends Component{
 
@@ -39,9 +39,9 @@ class Header extends Component{
             if( el.url.includes(SekelebatSettings.domain) ){
                 return(
                     <li key={el.ID} className="nav-item">
-                        <NavLink to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
+                        <Link to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
                             {el.title}
-                        </NavLink>
+                        </Link>
                     </li>);
             }else{
                 return(
@@ -60,7 +60,7 @@ class Header extends Component{
                     <div className="row w-100">
                         <div className="col-12">
                             <h1 className="site-title text-center">
-                                <a href={SekelebatSettings.path}>Sekelebat</a>
+                                <Link to={SekelebatSettings.path}>Sekelebat</Link>
                             </h1>
                         </div>
                         <div className="col-12">
