@@ -3,6 +3,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 
 import Content from './component/content/content';
 import Aux from "./hoc/Auxiliary";
+import {Redirect} from "react-router-dom";
 
 class Archive extends Component{
 
@@ -47,45 +48,52 @@ class Archive extends Component{
             } )
             .then( result => {
                 postList = result[1];
-                let taxUrl = SekelebatSettings.domain +  "/wp-json/wp/v2/"+ taxType + "/" + result[0];
-                fetch( taxUrl ).then( webResponse => {
-                    if ( !webResponse.ok ) {
-                        throw Error(webResponse.statusText);
-                    }
-                    return webResponse.json();
-                } ).then( taxResult => {
-                    this.setState({posts: postList, taxInfo: taxResult, sitedesc: result[2], url: window.location.href, loadedPost: true});
-                } )
+                if(result[0] !== null){
+                    let taxUrl = SekelebatSettings.domain +  "/wp-json/wp/v2/"+ taxType + "/" + result[0];
+                    fetch( taxUrl ).then( webResponse => {
+                        if ( !webResponse.ok ) {
+                            throw Error(webResponse.statusText);
+                        }
+                        return webResponse.json();
+                    } ).then( taxResult => {
+                        this.setState({posts: postList, taxInfo: taxResult, sitedesc: result[2], url: window.location.href, loadedPost: true});
+                    } )
+                }else{
+                    this.setState({posts: postList, url: window.location.href, loadedPost: true});
+                }
             } );
     }
 
     render() {
-
         let content = <div className="loading">Loading  gan</div>;
         let taxTitle = '';
-        if( this.state.loadedPost ) {
-            content = this.state.posts.map( el => {
-                return (
-                    <Content
-                        key={el.id}
-                        title={el.title['rendered']}
-                        categories={el.sekelebat_post_categories}
-                        tag={el.sekelebat_post_tags}
-                        excerpt={el.excerpt['rendered']}
-                        featuredImage={el.sekelebat_featured_image}
-                        author={el.sekelebat_author_name}
-                        date={el.sekelebat_published_date}
-                        link={el.link}
-                    />
-                );
-            } );
-            taxTitle = this.state.taxInfo['name'] + ' - ' + this.state.sitedesc;
+        let notFound = '';
+        if( this.state.loadedPost ){
+            if( this.state.posts.length === 0 ){
+                notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
+            }else{
+                content = this.state.posts.map( el => {
+                    return (
+                        <Content
+                            key={el.id}
+                            title={el.title['rendered']}
+                            categories={el.sekelebat_post_categories}
+                            tag={el.sekelebat_post_tags}
+                            excerpt={el.excerpt['rendered']}
+                            featuredImage={el.sekelebat_featured_image}
+                            author={el.sekelebat_author_name}
+                            date={el.sekelebat_published_date}
+                            link={el.link}
+                        />
+                    );
+                } );
+                taxTitle = this.state.taxInfo['name'] + ' - ' + this.state.sitedesc;
+            }
         }
-
-        console.log(this.state.posts);
 
         return (
             <Aux>
+                {notFound}
                 <Helmet>
                     <title>{taxTitle}</title>
                 </Helmet>

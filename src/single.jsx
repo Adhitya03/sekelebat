@@ -55,7 +55,7 @@ class Single extends Component {
 
             if( this.state.post.type === 'post' ){
                 let post_title = '';
-                if(this.state.post.yoast_meta.length === 0){
+                if(this.state.post.yoast_meta.length < 3){
                     metas = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                 }else{
                     if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
@@ -78,7 +78,7 @@ class Single extends Component {
                 />;
             }else if(this.state.post.type === 'page'){
                 let page_title = '';
-                if(this.state.post.yoast_meta.length === 0){
+                if(this.state.post.yoast_meta.length < 3){
                     metas = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                 }else{
                     if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
