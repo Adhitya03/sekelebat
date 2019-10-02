@@ -45,8 +45,6 @@ class Single extends Component {
 
     render() {
 
-
-
         let content = <div className="loading">Loading  gan</div>;
         let meta = '';
         let metas = '';
@@ -56,16 +54,16 @@ class Single extends Component {
             if( this.state.post.type === 'post' ){
                 let post_title = '';
                 if(this.state.post.yoast_meta.length < 3){
-                    metas = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                 }else{
                     if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
                         post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                     }else{
                         post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
                     }
-                    this.state.post.yoast_meta.push(post_title);
-                    metas = this.state.post.yoast_meta;
                 }
+                this.state.post.yoast_meta.push(post_title);
+                metas = this.state.post.yoast_meta;
                 meta = <PostMeta metaData={metas} />;
                 content = <ContentSingle
                     title={this.state.post.title['rendered']}
@@ -79,16 +77,16 @@ class Single extends Component {
             }else if(this.state.post.type === 'page'){
                 let page_title = '';
                 if(this.state.post.yoast_meta.length < 3){
-                    metas = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                 }else{
                     if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
                         page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                     }else{
                         page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
                     }
-                    this.state.post.yoast_meta.push(page_title);
-                    metas = this.state.post.yoast_meta;
                 }
+                this.state.post.yoast_meta.push(page_title);
+                metas = this.state.post.yoast_meta;
                 meta = <Pagemeta metaData={metas} />;
                 content = <ContentPage
                     title={this.state.post.title['rendered']}
@@ -100,6 +98,7 @@ class Single extends Component {
             }else if( this.state.post.data['status'] === 404 ){
                 notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
             }
+            console.log(this.state.post);
         }
 
         return (

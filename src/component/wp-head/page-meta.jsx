@@ -1,7 +1,7 @@
 import React from 'react';
 import {Helmet} from "react-helmet/es/Helmet";
 
-const pageMeta = (props ) => {
+const pageMeta = ( props ) => {
 
     let title = '';
     const wpseo_head = Object.keys(props.metaData).map((el) => {
