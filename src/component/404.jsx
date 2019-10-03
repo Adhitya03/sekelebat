@@ -14,7 +14,6 @@ const notFound = () => {
                 404
             </div>
         </Aux>
-
     );
 
 };
