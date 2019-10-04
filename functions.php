@@ -104,25 +104,44 @@ function post_route_handler( $data )
 
 function category_route_handler( $data )
 {
-	$categoryID = get_category_by_slug(str_replace( array(site_url().'/category/', '/'),'', $data['url']))->cat_ID;
-	$url = site_url().'/wp-json/wp/v2/posts?categories='.$categoryID;
+	$explodeUrl = explode(site_url().'/category/', $data['url'] );
+	if( strpos( $explodeUrl[1], '/page/' ) ){
+		$getSlug = explode( '/page/', $explodeUrl[1]);
+		$slug = $getSlug[0];
+		$page = '&page='.$getSlug[1];
+	}else{
+		$slug = $explodeUrl[1];
+		$page = '';
+	}
+	$categoryID = get_category_by_slug($slug)->cat_ID;
+	$url = site_url().'/wp-json/wp/v2/posts?categories='.$categoryID.$page;
 	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
 	$post = $response->data;
+	$headers = $response->get_headers();
 
-	return array($categoryID, $post, get_bloginfo( 'name' ));
+	return array($categoryID, $post, get_bloginfo( 'name' ), $headers);
 }
 
 function tag_route_handler( $data )
 {
-	$tagSlug = str_replace( array(site_url().'/tag/', '/'),'', $data['url']);
-	$tagID = get_term_by( 'slug', $tagSlug, 'post_tag' )->term_id;
-	$url = site_url().'/wp-json/wp/v2/posts?tags='.$tagID;
+	$explodeUrl = explode(site_url().'/tag/', $data['url'] );
+	if( strpos( $explodeUrl[1], '/page/' ) ){
+		$getSlug = explode( '/page/', $explodeUrl[1]);
+		$slug = $getSlug[0];
+		$page = '&page='.$getSlug[1];
+	}else{
+		$slug = $explodeUrl[1];
+		$page = '';
+	}
+	$tagID = get_term_by( 'slug', $slug, 'post_tag' )->term_id;
+	$url = site_url().'/wp-json/wp/v2/posts?tags='.$tagID.$page;
 	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
 	$post = $response->data;
+	$headers = $response->get_headers();
 
-	return array($tagID, $post, get_bloginfo( 'name' ));
+	return array($tagID, $post, get_bloginfo( 'name' ), $headers);
 
 }
 
