@@ -28,6 +28,7 @@ class Archive extends Component{
 
     componentDidUpdate() {
         this.fetchPosts();
+        window.scrollTo(0, 0);
     }
 
     componentDidMount() {

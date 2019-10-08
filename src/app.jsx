@@ -18,9 +18,9 @@ const App = () => (
         <div className="row">
             <Switch>
                 <Route exact path={SekelebatSettings.path} component={Index} />
+                <Route exact path={SekelebatSettings.path + 'page/:slug/'} component={Index} /> {/*Home page pagination*/}
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />
-                <Route exact path={SekelebatSettings.path + 'page/:slug/'} component={Index} />
                 <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />
                 <Route path={SekelebatSettings.path + ':slug'} component={Single} />
             </Switch>

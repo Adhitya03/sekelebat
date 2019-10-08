@@ -28,6 +28,7 @@ class Single extends Component {
 
     componentDidMount() {
         this.fetchPost();
+        window.scrollTo(0, 0);
     }
 
     fetchPost(){
