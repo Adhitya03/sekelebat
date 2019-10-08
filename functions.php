@@ -3,6 +3,7 @@
 // Remove title
 remove_action('wp_head', '_wp_render_title_tag', '1');
 
+// Rewrite archives url
 add_action( 'init', 'rewritePostTypeArchive' );
 function rewritePostTypeArchive() {
 	global $wp_rewrite;
@@ -55,6 +56,44 @@ function sekelebat_load_scripts() {
 	) ) ) );
 }
 add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
+
+
+function sekelebat_config(){
+
+	register_nav_menus(
+		array(
+			'primary' => __( 'Primary Menu', 'sekelebat' ),
+			'footer' => __( 'Footer Menu', 'sekelebat' ),
+		)
+	);
+
+	add_theme_support( 'post-thumbnails' );
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'align-wide' );
+	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'align-wide' );
+
+}
+add_action( 'after_setup_theme', 'sekelebat_config', 0 );
+
+// registering sidebar
+function buildx_sidebar(){
+
+	register_sidebar(
+		array(
+			'name' => 'Sidebar',
+			'id' => 'sidebar-area',
+			'description' => esc_html__( 'This is the blog sidebar. You can add your widgets here', 'buildx' ),
+			'before_widget' => '<div class="widget-wrapper">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>'
+		)
+	);
+
+}
+add_action('widgets_init', 'buildx_sidebar');
+
 
 function get_sekelebat_webinfo() {
 	return get_bloginfo('name');
@@ -147,7 +186,6 @@ function tag_route_handler( $data )
 	$headers = $response->get_headers();
 
 	return array($tagID, $post, get_bloginfo( 'name' ), $headers);
-
 }
 
 // Add various fields to the JSON output
@@ -228,39 +266,5 @@ function sekelebat_register_fields() {
 }
 add_action( 'rest_api_init', 'sekelebat_register_fields' );
 
-function sekelebat_config(){
-
-	register_nav_menus(
-		array(
-			'primary' => __( 'Primary Menu', 'sekelebat' ),
-		)
-	);
-
-	add_theme_support( 'post-thumbnails' );
-	add_theme_support( 'title-tag' );
-	add_theme_support( 'align-wide' );
-	add_theme_support( 'automatic-feed-links' );
-	add_theme_support( 'align-wide' );
-
-}
-add_action( 'after_setup_theme', 'sekelebat_config', 0 );
-
-// registering sidebar
-function buildx_sidebar(){
-
-	register_sidebar(
-		array(
-			'name' => 'Sidebar',
-			'id' => 'sidebar-area',
-			'description' => esc_html__( 'This is the blog sidebar. You can add your widgets here', 'buildx' ),
-			'before_widget' => '<div class="widget-wrapper">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h3 class="widget-title">',
-			'after_title'   => '</h3>'
-		)
-	);
-
-}
-add_action('widgets_init', 'buildx_sidebar');
 
 ?>

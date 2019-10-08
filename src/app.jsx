@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './header';
+import Footer from './footer';
 import Aux from './hoc/Auxiliary';
 import Single from './single';
 import Index from './index';
@@ -27,6 +28,7 @@ const App = () => (
             </Switch>
             <Sidebar/>
         </div>
+        <Footer />
     </Aux>
 );
 
