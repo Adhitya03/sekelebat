@@ -15,7 +15,7 @@ class footer extends Component{
     }
 
     componentDidMount() {
-        this.fetchMenu();
+        this.fetchFooterMenu();
     }
 
     fetchFooterMenu(){
