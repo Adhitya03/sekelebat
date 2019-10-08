@@ -24,7 +24,6 @@ class Index extends Component{
 
     componentDidUpdate() {
         this.fetchPosts();
-        window.scrollTo(0, 0);
     }
 
     componentDidMount() {
@@ -93,6 +92,7 @@ class Index extends Component{
             } );
             webInfoTitle = this.state.webInfo['name'] + ' - ' + this.state.webInfo['description'];
             pagination = <Pagination pagination={this.state.totalPages}/>;
+            window.scrollTo(0, 0);
         }
 
         return (

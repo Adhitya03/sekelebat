@@ -28,7 +28,6 @@ class Archive extends Component{
 
     componentDidUpdate() {
         this.fetchPosts();
-        window.scrollTo(0, 0);
     }
 
     componentDidMount() {
@@ -99,6 +98,7 @@ class Archive extends Component{
                 taxTitle = this.state.taxInfo['name'] + ' - ' + this.state.sitedesc;
                 pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages["X-WP-TotalPages"]}/>;
             }
+            window.scrollTo(0, 0);
         }
 
         return (

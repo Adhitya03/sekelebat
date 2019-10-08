@@ -28,7 +28,6 @@ class Single extends Component {
 
     componentDidMount() {
         this.fetchPost();
-        window.scrollTo(0, 0);
     }
 
     fetchPost(){
@@ -51,7 +50,6 @@ class Single extends Component {
         let metas = '';
         let notFound = '';
         if( this.state.loadedPost ){
-
             if( this.state.post.type === 'post' ){
                 let post_title = '';
                 if(this.state.post.yoast_meta.length < 3){
@@ -99,7 +97,7 @@ class Single extends Component {
             }else if( this.state.post.data['status'] === 404 ){
                 notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
             }
-            console.log(this.state.post);
+            window.scrollTo(0, 0);
         }
 
         return (
