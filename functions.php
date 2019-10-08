@@ -3,6 +3,11 @@
 // Remove title
 remove_action('wp_head', '_wp_render_title_tag', '1');
 
+add_action( 'init', 'rewritePostTypeArchive' );
+function rewritePostTypeArchive() {
+	global $wp_rewrite;
+	return $wp_rewrite->date_structure = 'archives/%year%/%monthnum%/%day%';
+}
 // Remove Yoast Meta SEO will call using react-helmet
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 if (is_plugin_active('wordpress-seo/wp-seo.php')) {

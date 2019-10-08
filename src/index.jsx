@@ -47,13 +47,11 @@ class Index extends Component{
         fetch( url )
             .then( response => {
                 for (var pair of response.headers.entries()) {
-
                     // getting the total number of pages
                     if (pair[0] === 'x-wp-totalpages') {
                         pagesNumb = pair[1];
                     }
                 }
-
                 if ( !response.ok ) {
                     throw Error(response.statusText);
                 }
