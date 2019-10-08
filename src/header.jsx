@@ -33,8 +33,6 @@ class Header extends Component{
 
     render() {
 
-        let anchor = '';
-        let ref = '';
         const menuItem = this.state.menus.map( (el) =>{
             if( el.url.includes(SekelebatSettings.domain) ){
                 return(
@@ -51,7 +49,6 @@ class Header extends Component{
                         </a>
                     </li>);
             }
-
         });
 
         return(

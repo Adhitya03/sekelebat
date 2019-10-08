@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-class footer extends Component{
+class Footer extends Component{
 
     constructor( props ){
         super( props );
         this.state = {
-            footerMenu: []
+            footerMenus: [],
+            loadedMenus: false
         }
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextState.footerMenu !== this.state.footerMenu;
+        return nextState.footerMenus !== this.state.footerMenus;
     }
 
     componentDidMount() {
@@ -20,20 +21,19 @@ class footer extends Component{
 
     fetchFooterMenu(){
         fetch( SekelebatSettings.domain + "/wp-json/menus/v1/menus/footer" )
-            .then( respons => {
-                if(!respons.ok){
-                    Error(respons.statusText);
+            .then( response => {
+                if(!response.ok){
+                    Error(response.statusText);
                 }
-                return respons.json();
+                return response.json();
             } )
-            .then( result =>{
-                this.setState({ footerMenu: result.item});
+            .then( result => {
+                this.setState( { footerMenus: result.items, loadedMenus: true} );
             } );
     };
 
     render(){
-
-        const footerMenu = this.state.footerMenu.map( (el) => {
+        const footer = this.state.footerMenus.map( (el) => {
             if( el.url.includes(SekelebatSettings.domain) ){
                 return(
                     <li key={el.ID} className="footer-nav-item">
@@ -51,18 +51,19 @@ class footer extends Component{
             }
         } );
 
+
         return(
             <div id="row" className="row">
                 <div className="col-12">
                     <ul>
-                        {footerMenu}
+                        {footer}
                     </ul>
                 </div>
             </div>
         );
 
-    };
+    }
 
 }
 
-export default footer;
+export default Footer;
