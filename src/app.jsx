@@ -21,8 +21,11 @@ const App = () => (
                 <Route exact path={SekelebatSettings.path} component={Index} />
                 <Route exact path={SekelebatSettings.path + 'page/:slug'} component={Index} /> {/*Home page pagination*/}
                 <Route exact path={SekelebatSettings.path + 'archives/:slug'} component={Archive} />
+                <Route exact path={SekelebatSettings.path + 'archives/:slug/page/:slug'} component={Archive} />{/*Yearly archive page pagination*/}
                 <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug'} component={Archive} />
+                <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug/page/:slug'} component={Archive} />{/*Monthly archive page pagination*/}
                 <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug/:slug'} component={Archive} />
+                <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug/:slug/page/:slug'} component={Archive} />{/*Daily archive page pagination*/}
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />
                 <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />

@@ -35,15 +35,23 @@ class Archive extends Component{
     }
 
     fetchPosts(){
-        let postList = '';
-        let type = 'category';
-        let taxType = 'categories';
-        const currentType = window.location.href.split(SekelebatSettings.domain)[1].split('/')[0];
+
+        const pageUrl = window.location.href;
+        const currentType = pageUrl.split(SekelebatSettings.domain)[1].split('/')[0];
         let currentSlug = '';
         if(currentType === "archives"){
-            const get_date = window.location.href.split(SekelebatSettings.domain + 'archives/');
-            currentSlug = get_date[1];
             let pagesNumb = null;
+            let archiveUrl = '';
+            let currentNumb = null;
+            if( pageUrl.includes('page') ){
+                const get_archive_url = pageUrl.split('/page/');
+                currentNumb = get_archive_url[1].split('/')[0];
+                archiveUrl = get_archive_url[0];
+            }else{
+                archiveUrl = pageUrl;
+            }
+            const get_date = archiveUrl.split(SekelebatSettings.domain + 'archives/');
+            currentSlug = get_date[1];
             const explode_date = get_date[1].split('/').filter( el => {
                 return el !== '';
             } );
@@ -56,8 +64,13 @@ class Archive extends Component{
                 args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1]+ '&day=' + explode_date[2];
             }
 
-            const url = SekelebatSettings.domain +  "wp-json/wp/v2/posts" + args + "&date_query_column=post_modified";
-            console.log(currentSlug);
+            args = args + '&date_query_column=post_modified';
+
+            if( currentNumb !== null ){
+                args = args + '&page=' + currentNumb;
+            }
+
+            const url = SekelebatSettings.domain +  "wp-json/wp/v2/posts" + args;
 
             fetch( url )
                 .then( response => {
@@ -84,6 +97,9 @@ class Archive extends Component{
                     } );
                 });
         }else{
+            let postList = '';
+            let type = 'category';
+            let taxType = 'categories';
             currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
             if( currentType === "tag" ){
                 type = 'tag';
