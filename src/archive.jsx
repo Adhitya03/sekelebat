@@ -12,7 +12,7 @@ class Archive extends Component{
         super(props);
         this.state = {
             posts: [],
-            taxInfo: [],
+            taxInfo: '',
             sitedesc: '',
             url: null,
             totalPages: null,
@@ -39,35 +39,80 @@ class Archive extends Component{
         let type = 'category';
         let taxType = 'categories';
         const currentType = window.location.href.split(SekelebatSettings.domain)[1].split('/')[0];
-        const currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
-        if( currentType === "tag" ){
-            type = 'tag';
-            taxType = 'tags';
-        }
+        let currentSlug = '';
+        if(currentType === "archives"){
+            const get_date = window.location.href.split(SekelebatSettings.domain + 'archives/');
+            currentSlug = get_date[1];
+            let pagesNumb = null;
+            const explode_date = get_date[1].split('/').filter( el => {
+                return el !== '';
+            } );
+            let args = '';
+            if( explode_date.length === 1 ){
+                args = '?year=' + explode_date[0];
+            }else if( explode_date.length === 2 ){
+                args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1];
+            }else{
+                args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1]+ '&day=' + explode_date[2];
+            }
 
-        fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + window.location.href )
-            .then( response => {
-                if ( !response.ok ) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            } )
-            .then( result => {
-                postList = result[1];
-                if(result[0] !== null){
-                    let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ taxType + "/" + result[0];
-                    fetch( taxUrl ).then( webResponse => {
+            const url = SekelebatSettings.domain +  "wp-json/wp/v2/posts" + args + "&date_query_column=post_modified";
+            console.log(currentSlug);
+
+            fetch( url )
+                .then( response => {
+                    if(!response.ok){
+                        throw Error(response.statusText);
+                    }
+                    for (var pair of response.headers.entries()) {
+                        // getting the total number of pages
+                        if (pair[0] === 'x-wp-totalpages') {
+                            pagesNumb = pair[1];
+                        }
+                    }
+                    return response.json();
+                } )
+                .then( result => {
+                    let webUrl = SekelebatSettings.domain +  "wp-json/";
+                    fetch( webUrl ).then( webResponse => {
                         if ( !webResponse.ok ) {
                             throw Error(webResponse.statusText);
                         }
                         return webResponse.json();
-                    } ).then( taxResult => {
-                        this.setState({posts: postList, taxInfo: taxResult, sitedesc: result[2], totalPages: result[3], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
-                    } )
-                }else{
-                    this.setState({posts: postList, url: window.location.href, loadedPost: true});
-                }
-            } );
+                    } ).then( webResult => {
+                        this.setState({posts: result, taxInfo: "Maret 2019", sitedesc: webResult["name"], totalPages: pagesNumb, type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                    } );
+                });
+        }else{
+            currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
+            if( currentType === "tag" ){
+                type = 'tag';
+                taxType = 'tags';
+            }
+            fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + window.location.href )
+                .then( response => {
+                    if ( !response.ok ) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                } )
+                .then( result => {
+                    postList = result[1];
+                    if(result[0] !== null){
+                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ taxType + "/" + result[0];
+                        fetch( taxUrl ).then( webResponse => {
+                            if ( !webResponse.ok ) {
+                                throw Error(webResponse.statusText);
+                            }
+                            return webResponse.json();
+                        } ).then( taxResult => {
+                            this.setState({posts: postList, taxInfo: taxResult['name'], sitedesc: result[2], totalPages: result[3]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                        } )
+                    }else{
+                        this.setState({posts: postList, url: window.location.href, loadedPost: true});
+                    }
+                } );
+        }
     }
 
     render() {
@@ -94,8 +139,8 @@ class Archive extends Component{
                         />
                     );
                 } );
-                taxTitle = this.state.taxInfo['name'] + ' - ' + this.state.sitedesc;
-                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages["X-WP-TotalPages"]}/>;
+                taxTitle = this.state.taxInfo + ' - ' + this.state.sitedesc;
+                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages}/>;
             }
             window.scrollTo(0, 0);
         }

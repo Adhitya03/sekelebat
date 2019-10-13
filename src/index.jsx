@@ -45,14 +45,14 @@ class Index extends Component{
         let pagesNumb = '';
         fetch( url )
             .then( response => {
+                if ( !response.ok ) {
+                    throw Error(response.statusText);
+                }
                 for (var pair of response.headers.entries()) {
                     // getting the total number of pages
                     if (pair[0] === 'x-wp-totalpages') {
                         pagesNumb = pair[1];
                     }
-                }
-                if ( !response.ok ) {
-                    throw Error(response.statusText);
                 }
                 return response.json();
             } )
