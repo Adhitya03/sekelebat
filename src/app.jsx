@@ -8,6 +8,7 @@ import Aux from './hoc/Auxiliary';
 import Single from './single';
 import Index from './index';
 import Archive from './archive';
+import DateArchive from './archiveDate';
 import Sidebar from './sidebar';
 import NotFound from './component/404';
 
@@ -19,8 +20,10 @@ const App = () => (
         <div className="row">
             <Switch>
                 <Route exact path={SekelebatSettings.path} component={Index} />
-                <Route exact path={SekelebatSettings.path + 'page/:slug/'} component={Index} /> {/*Home page pagination*/}
-                <Route exact path={SekelebatSettings.path + 'archives/:slug/'} component={Archive} /> {/*Home page pagination*/}
+                <Route exact path={SekelebatSettings.path + 'page/:slug'} component={Index} /> {/*Home page pagination*/}
+                <Route exact path={SekelebatSettings.path + 'archives/:slug'} component={DateArchive} />
+                <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug'} component={DateArchive} />
+                <Route exact path={SekelebatSettings.path + 'archives/:slug/:slug/:slug'} component={DateArchive} />
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                 <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />
                 <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />

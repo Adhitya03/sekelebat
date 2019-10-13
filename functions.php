@@ -9,6 +9,7 @@ function rewritePostTypeArchive() {
 	global $wp_rewrite;
 	return $wp_rewrite->date_structure = 'archives/%year%/%monthnum%/%day%';
 }
+
 // Remove Yoast Meta SEO will call using react-helmet
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 if (is_plugin_active('wordpress-seo/wp-seo.php')) {
@@ -94,6 +95,26 @@ function buildx_sidebar(){
 }
 add_action('widgets_init', 'buildx_sidebar');
 
+
+function sekelebat_post_archive( $args, $request ) {
+
+	if( ! empty( $request['year'] ) ) $args['date_query'][0]['year'] = $request['year'];
+	if( ! empty( $request['monthnum'] ) ) $args['date_query'][0]['monthnum'] = $request['monthnum'];
+	if( ! empty( $request['day'] ) ) $args['date_query'][0]['day'] = $request['day'];
+	if( ! empty( $request['date_query_column'] ) ) $args['date_query'][0]['column'] = $request['date_query_column'];
+
+	return $args;
+}
+add_filter( 'rest_post_query', 'sekelebat_post_archive' , 10, 2 );
+
+add_filter( 'rest_post_collection_params', function( $query_params ) {
+	$query_params['date_query_column'] = [
+		'description' => __( 'The date query column.' ),
+		'type'        => 'string',
+		'enum'        => [ 'post_date', 'post_date_gmt', 'post_modified', 'post_modified_gmt', 'comment_date', 'comment_date_gmt' ],
+	];
+	return $query_params;
+} );
 
 function get_sekelebat_webinfo() {
 	return get_bloginfo('name');
@@ -263,6 +284,7 @@ function sekelebat_register_fields() {
 		'methods' => 'GET',
 		'callback' => 'tag_route_handler',
 	));
+
 }
 add_action( 'rest_api_init', 'sekelebat_register_fields' );
 
