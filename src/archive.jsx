@@ -12,8 +12,8 @@ class Archive extends Component{
         super(props);
         this.state = {
             posts: [],
-            taxInfo: '',
-            sitedesc: '',
+            pageName: '',
+            siteName: '',
             url: null,
             totalPages: null,
             type: '',
@@ -56,12 +56,22 @@ class Archive extends Component{
                 return el !== '';
             } );
             let args = '';
+            const monthNames = [
+                "January", "February", "March",
+                "April", "May", "June", "July",
+                "August", "September", "October",
+                "November", "December"
+            ];
+            let archiveName = '';
             if( explode_date.length === 1 ){
                 args = '?year=' + explode_date[0];
+                archiveName = 'Yearly Archives : ' + explode_date[0];
             }else if( explode_date.length === 2 ){
                 args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1];
+                archiveName = 'Monthly Archives : ' + monthNames[explode_date[1].replace(0,'')-1]+ ' ' + explode_date[0];
             }else{
                 args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1]+ '&day=' + explode_date[2];
+                archiveName = 'Daily Archives : ' + monthNames[explode_date[1].replace(0,'')-1] + ' ' + explode_date[2] + ' ' + explode_date[0];
             }
 
             args = args + '&date_query_column=post_modified';
@@ -93,7 +103,7 @@ class Archive extends Component{
                         }
                         return webResponse.json();
                     } ).then( webResult => {
-                        this.setState({posts: result, taxInfo: "Maret 2019", sitedesc: webResult["name"], totalPages: pagesNumb, type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                        this.setState({posts: result, pageName: archiveName, siteName: webResult["name"], totalPages: pagesNumb, type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
                     } );
                 });
         }else{
@@ -122,7 +132,7 @@ class Archive extends Component{
                             }
                             return webResponse.json();
                         } ).then( taxResult => {
-                            this.setState({posts: postList, taxInfo: taxResult['name'], sitedesc: result[2], totalPages: result[3]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                            this.setState({posts: postList, pageName: taxResult['name'], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});
@@ -155,7 +165,7 @@ class Archive extends Component{
                         />
                     );
                 } );
-                taxTitle = this.state.taxInfo + ' - ' + this.state.sitedesc;
+                taxTitle = this.state.pageName + ' - ' + this.state.siteName;
                 pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages}/>;
             }
             window.scrollTo(0, 0);
