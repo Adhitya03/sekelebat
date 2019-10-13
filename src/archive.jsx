@@ -54,9 +54,8 @@ class Archive extends Component{
             } )
             .then( result => {
                 postList = result[1];
-                console.log(result);
                 if(result[0] !== null){
-                    let taxUrl = SekelebatSettings.domain +  "/wp-json/wp/v2/"+ taxType + "/" + result[0];
+                    let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ taxType + "/" + result[0];
                     fetch( taxUrl ).then( webResponse => {
                         if ( !webResponse.ok ) {
                             throw Error(webResponse.statusText);

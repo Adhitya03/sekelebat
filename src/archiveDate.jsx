@@ -20,21 +20,20 @@ class ArchiveDate extends Component {
             args = '?year=' + explode_date[0] + '&monthnum=' + explode_date[1]+ '&day=' + explode_date[2];
         }
 
-        console.log(args);
+        const url = SekelebatSettings.domain +  "wp-json/wp/v2/posts" + args + "&date_query_column=post_modified";
+        console.log(url);
 
-        fetch( SekelebatSettings.domain +  "/wp-json/wp/v2/posts" + args + "&date_query_column=post_modified")
+        fetch( url )
             .then( respond => {
                 if(!respond.ok){
                     throw Error(respond.statusText);
                 }
+                console.log(respond);
                 return respond.json();
             } )
             .then( result => {
-                if(!result.ok){
-                    throw Error(result.statusText);
-                }
+
                 console.log(result);
-                return result;
             });
     }
 

@@ -37,9 +37,9 @@ class Index extends Component{
         if( pageUrl.includes('page') ){
             const pageNumb = pageUrl.split('/');
             console.log(pageNumb[pageNumb.length - 2]);
-            url = SekelebatSettings.domain +  "/wp-json/wp/v2/posts?page=" + pageNumb[pageNumb.length - 2];
+            url = SekelebatSettings.domain +  "wp-json/wp/v2/posts?page=" + pageNumb[pageNumb.length - 2];
         }else{
-             url = SekelebatSettings.domain +  "/wp-json/wp/v2/posts";
+             url = SekelebatSettings.domain +  "wp-json/wp/v2/posts";
         }
 
         let pagesNumb = '';
@@ -55,9 +55,10 @@ class Index extends Component{
                     throw Error(response.statusText);
                 }
                 return response.json();
-            } ).then( result => {
+            } )
+            .then( result => {
             postList = result;
-            let webUrl = SekelebatSettings.domain +  "/wp-json/";
+            let webUrl = SekelebatSettings.domain +  "wp-json/";
             fetch( webUrl ).then( webResponse => {
                 if ( !webResponse.ok ) {
                     throw Error(webResponse.statusText);
