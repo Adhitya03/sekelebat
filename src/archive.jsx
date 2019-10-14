@@ -110,8 +110,8 @@ class Archive extends Component{
             const getSlug = pageUrl.split( SekelebatSettings.domain )[1];
             const currentSlug = getSlug.split( 'author/' );
             let authorID = currentSlug[1].replace( '/', '' );
-            if( currentSlug.includes( '/page/' ) ){
-                authorID = currentSlug.split( '/page/' )[0];
+            if( currentSlug[1].includes( 'page' ) ){
+                authorID = currentSlug[1].split( '/page/' )[0];
             }
             const url = SekelebatSettings.domain + "wp-json/sekelebat/v1/" + getSlug;
             fetch( url )
