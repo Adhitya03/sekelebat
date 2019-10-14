@@ -44,14 +44,14 @@ class Archive extends Component{
             let archiveUrl = '';
             let currentNumb = null;
             if( pageUrl.includes('page') ){
-                const get_archive_url = pageUrl.split('/page/');
+                const get_archive_url = pageUrl.split('page/');
                 currentNumb = get_archive_url[1].split('/')[0];
                 archiveUrl = get_archive_url[0];
             }else{
                 archiveUrl = pageUrl;
             }
             const get_date = archiveUrl.split(SekelebatSettings.domain + 'archives/');
-            currentSlug = get_date[1];
+            currentSlug = get_date[1].slice( 0, -1 );
             const explode_date = get_date[1].split('/').filter( el => {
                 return el !== '';
             } );
@@ -103,7 +103,7 @@ class Archive extends Component{
                         }
                         return webResponse.json();
                     } ).then( webResult => {
-                        this.setState({posts: result, pageName: archiveName, siteName: webResult["name"], totalPages: pagesNumb, type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                        this.setState({posts: result, pageName: archiveName, siteName: webResult["name"], totalPages: pagesNumb, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
                     } );
                 });
         }else if(currentType === "author"){
