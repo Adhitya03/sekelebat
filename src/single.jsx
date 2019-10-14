@@ -92,6 +92,7 @@ class Single extends Component {
                     content={this.state.post.content['rendered']}
                     featuredImage={this.state.post.sekelebat_featured_image}
                     author={this.state.post.sekelebat_author_name}
+                    authorSlug={this.state.post.sekelebat_get_author_slug}
                     date={this.state.post.sekelebat_published_date}
                 />;
             }else if( this.state.post.data['status'] === 404 ){

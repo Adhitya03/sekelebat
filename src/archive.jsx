@@ -37,9 +37,9 @@ class Archive extends Component{
     fetchPosts(){
 
         const pageUrl = window.location.href;
-        const currentType = pageUrl.split(SekelebatSettings.domain)[1].split('/')[0];
+        const currentType = pageUrl.split( SekelebatSettings.domain )[1].split( '/' )[0];
         let currentSlug = '';
-        if(currentType === "archives"){
+        if( currentType === "archives" ){
             let pagesNumb = null;
             let archiveUrl = '';
             let currentNumb = null;
@@ -105,6 +105,25 @@ class Archive extends Component{
                     } ).then( webResult => {
                         this.setState({posts: result, pageName: archiveName, siteName: webResult["name"], totalPages: pagesNumb, type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
                     } );
+                });
+        }else if(currentType === "author"){
+            const getSlug = pageUrl.split( SekelebatSettings.domain )[1];
+            const currentSlug = getSlug.split( 'author/' );
+            let authorID = currentSlug[1].replace( '/', '' );
+            if( currentSlug.includes( '/page/' ) ){
+                authorID = currentSlug.split( '/page/' )[0];
+            }
+            const url = SekelebatSettings.domain + "wp-json/sekelebat/v1/" + getSlug;
+            fetch( url )
+                .then( response => {
+                    if(!response.ok){
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                } )
+                .then( result => {
+                    const postList = result[1];
+                    this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
         }else{
             let postList = '';

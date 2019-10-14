@@ -32,7 +32,7 @@ const content = ( props ) => {
            <div className="header-meta">
                <div className="row">
                    <div className="col-6 date">{props.date}</div>
-                   <div className="col-6 author">{props.author}</div>
+                   <div className="col-6 author"><Link to={SekelebatSettings.path + 'author/' + props.authorID}>{props.author}</Link></div>
                </div>
            </div>
            <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>

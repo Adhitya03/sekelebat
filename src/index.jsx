@@ -86,6 +86,7 @@ class Index extends Component{
                         excerpt={el.excerpt['rendered']}
                         featuredImage={el.sekelebat_featured_image}
                         author={el.sekelebat_author_name}
+                        authorID={el.author}
                         date={el.sekelebat_published_date}
                         link={el.link}
                     />

@@ -209,6 +209,27 @@ function tag_route_handler( $data )
 	return array($tagID, $post, get_bloginfo( 'name' ), $headers);
 }
 
+function author_route_handler( $data ){
+	$explodeUrl = $data['url'];
+	if( strpos( $explodeUrl, '/page/' ) ){
+		$getSlug = explode( '/page/', $explodeUrl);
+		$slug = $getSlug[0];
+		$page = '&page='.$getSlug[1];
+	}else{
+		$slug = $explodeUrl;
+		$page = '';
+	}
+	$authorID = $slug;
+	$authorDisplayName = get_the_author_meta( 'display_name', $authorID );
+	$url = site_url().'/wp-json/wp/v2/posts?author='.$authorID.$page;
+	$request = WP_REST_Request::from_url( $url );
+	$response = rest_do_request( $request );
+	$post = $response->data;
+	$headers = $response->get_headers();
+
+	return array($authorDisplayName, $post, get_bloginfo( 'name' ), $headers);
+}
+
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
 
@@ -231,6 +252,7 @@ function sekelebat_register_fields() {
 			'schema'            => null
 		)
 	);
+
 	// Add Featured Image
 	register_rest_field( array( 'post', 'page' ),
 		'sekelebat_featured_image',
@@ -240,6 +262,7 @@ function sekelebat_register_fields() {
 			'schema'            => null
 		)
 	);
+
 	// Add Published Date
 	register_rest_field( array( 'post', 'page' ),
 		'sekelebat_published_date',
@@ -283,6 +306,11 @@ function sekelebat_register_fields() {
 	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'tag_route_handler',
+	));
+
+	register_rest_route('sekelebat/v1', '/author/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
+		'methods' => 'GET',
+		'callback' => 'author_route_handler',
 	));
 
 }
