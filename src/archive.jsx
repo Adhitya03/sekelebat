@@ -127,31 +127,32 @@ class Archive extends Component{
                 });
         }else{
             let postList = '';
-            let type = 'category';
-            let taxType = 'categories';
+            let type = 'categories';
             currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
             if( currentType === "tag" ){
-                type = 'tag';
-                taxType = 'tags';
+                type = 'tags';
             }
-            fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + window.location.href )
+            const typeUrl = type === 'categories' ? 'category' : 'tag';
+            const slug = window.location.href.split( SekelebatSettings.domain + typeUrl + '/' )[1];
+            const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + slug;
+            fetch( url )
                 .then( response => {
                     if ( !response.ok ) {
-                        throw Error(response.statusText);
+                        throw Error( response.statusText );
                     }
                     return response.json();
                 } )
                 .then( result => {
                     postList = result[1];
-                    if(result[0] !== null){
-                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ taxType + "/" + result[0];
+                    if( result[0] !== null ){
+                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ type + "/" + result[0];
                         fetch( taxUrl ).then( webResponse => {
                             if ( !webResponse.ok ) {
                                 throw Error(webResponse.statusText);
                             }
                             return webResponse.json();
-                        } ).then( taxResult => {
-                            this.setState({posts: postList, pageName: taxResult['name'], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                        } ).then( taxResult => { /*taxResult : Taxonomi Result*/
+                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});

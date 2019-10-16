@@ -52,6 +52,7 @@ function sekelebat_load_scripts() {
 
 	wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var SekelebatSettings = %s;', wp_json_encode( array(
 		'title' => get_bloginfo( 'name', 'display' ),
+		'description' => get_bloginfo( 'description', 'display' ),
 		'path' => $path,
 		'domain' =>  esc_url_raw( $url ),
 	) ) ) );
@@ -171,13 +172,12 @@ function post_route_handler( $data )
 
 function category_route_handler( $data )
 {
-	$explodeUrl = explode(site_url().'/category/', $data['url'] );
-	if( strpos( $explodeUrl[1], '/page/' ) ){
-		$getSlug = explode( '/page/', $explodeUrl[1]);
+	$slug = $data['url'];
+	if( strpos( $slug, '/page/' ) ){
+		$getSlug = explode( '/page/', $slug);
 		$slug = $getSlug[0];
 		$page = '&page='.$getSlug[1];
 	}else{
-		$slug = $explodeUrl[1];
 		$page = '';
 	}
 	$categoryID = get_category_by_slug($slug)->cat_ID;
@@ -187,18 +187,17 @@ function category_route_handler( $data )
 	$post = $response->data;
 	$headers = $response->get_headers();
 
-	return array($categoryID, $post, get_bloginfo( 'name' ), $headers);
+	return array( $categoryID, $post, $headers );
 }
 
 function tag_route_handler( $data )
 {
-	$explodeUrl = explode(site_url().'/tag/', $data['url'] );
-	if( strpos( $explodeUrl[1], '/page/' ) ){
-		$getSlug = explode( '/page/', $explodeUrl[1]);
+	$slug = $data['url'];
+	if( strpos( $slug, '/page/' ) ){
+		$getSlug = explode( '/page/', $slug);
 		$slug = $getSlug[0];
 		$page = '&page='.$getSlug[1];
 	}else{
-		$slug = $explodeUrl[1];
 		$page = '';
 	}
 	$tagID = get_term_by( 'slug', $slug, 'post_tag' )->term_id;
@@ -208,7 +207,7 @@ function tag_route_handler( $data )
 	$post = $response->data;
 	$headers = $response->get_headers();
 
-	return array($tagID, $post, get_bloginfo( 'name' ), $headers);
+	return array($tagID, $post, $headers);
 }
 
 function author_route_handler( $data ){
@@ -300,12 +299,12 @@ function sekelebat_register_fields() {
 		'callback' => 'post_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/category/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
+	register_rest_route('sekelebat/v1', '/categories/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'category_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
+	register_rest_route('sekelebat/v1', '/tags/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'tag_route_handler',
 	));
