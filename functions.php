@@ -158,8 +158,10 @@ function get_sekelebat_post_tags( $object, $field_name, $request ){
 
 function post_route_handler( $data )
 {
-	$postType = get_post_type( url_to_postid( $data['url'] ) );
-	$route = $postType === 'post' ? '/wp/v2/posts/'.url_to_postid( $data['url'] ) : '/wp/v2/pages/'.url_to_postid( $data['url'] );
+	$postURL = site_url().'/'.$data['url'];
+	$postID = url_to_postid( $postURL );
+	$postType = get_post_type( $postID );
+	$route = $postType === 'post' ? '/wp/v2/posts/'.$postID : '/wp/v2/pages/'.$postID;
 	$request = new WP_REST_Request( 'GET', $route );
 	$response = rest_do_request( $request );
 	$post = $response->data;

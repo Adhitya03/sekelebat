@@ -31,7 +31,9 @@ class Single extends Component {
     }
 
     fetchPost(){
-        fetch( SekelebatSettings.domain +  "wp-json/sekelebat/v1/post/" + window.location.href )
+        const slug = window.location.href.split( SekelebatSettings.domain )[1];
+        const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/post/" + slug;
+        fetch( url )
             .then( response => {
                 if ( !response.ok ) {
                     throw Error(response.statusText);
@@ -44,7 +46,6 @@ class Single extends Component {
     }
 
     render() {
-
         let content = <div className="loading">Loading  gan</div>;
         let meta = '';
         let metas = '';
