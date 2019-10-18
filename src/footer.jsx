@@ -54,11 +54,15 @@ class Footer extends Component{
             } );
         }
         return(
-            <div id="row" className="row">
-                <div className="col-12">
-                    <ul>
-                        { footerItemMenus }
-                    </ul>
+            <div id="row">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <ul>
+                                { footerItemMenus }
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

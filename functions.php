@@ -46,6 +46,7 @@ function sekelebat_load_scripts() {
 	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
 
 	wp_enqueue_script( 'sekelebat-script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), '1.0', true );
+	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
 
 	$url = trailingslashit( home_url() );
 	$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );

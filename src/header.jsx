@@ -55,7 +55,7 @@ class Header extends Component{
         }
 
         return(
-            <header id="masthead" className="site-header" role="banner">
+            <header id="masthead" className="site-header container" role="banner">
                 <nav className="navbar navbar-expand-lg navbar-light ">
                     <div className="row w-100">
                         <div className="col-12">
