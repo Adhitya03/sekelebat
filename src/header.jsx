@@ -22,7 +22,6 @@ class Header extends Component{
     fetchMenu(){
         fetch(SekelebatSettings.domain + "/wp-json/menus/v1/menus/primary")
             .then(response => {
-                console.log(response);
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }

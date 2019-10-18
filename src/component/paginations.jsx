@@ -15,8 +15,6 @@ const pagination = ( props ) => {
         }
     }
 
-    console.log(pagesNumb);
-
     const pageLink = pagesNumb.map( el => el );
 
     return(

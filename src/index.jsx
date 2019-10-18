@@ -36,7 +36,6 @@ class Index extends Component{
         let url = '';
         if( pageUrl.includes('page') ){
             const pageNumb = pageUrl.split('/');
-            console.log(pageNumb[pageNumb.length - 2]);
             url = SekelebatSettings.domain +  "wp-json/wp/v2/posts?page=" + pageNumb[pageNumb.length - 2];
         }else{
              url = SekelebatSettings.domain +  "wp-json/wp/v2/posts";

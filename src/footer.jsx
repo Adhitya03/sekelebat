@@ -22,7 +22,6 @@ class Footer extends Component{
     fetchFooterMenu(){
         fetch( SekelebatSettings.domain + "/wp-json/menus/v1/menus/footer" )
             .then( response => {
-                console.log(response);
                 if(!response.ok){
                     throw Error(response.statusText);
                 }
@@ -36,7 +35,6 @@ class Footer extends Component{
     render(){
         let footerItemMenus = '';
         if( this.state.loadedfooterMenus ){
-            console.log(this.state.loadedfooterMenus);
             footerItemMenus = this.state.footerMenus.map( (el) => {
                 if( el.url.includes( SekelebatSettings.domain ) ){
                     return(
