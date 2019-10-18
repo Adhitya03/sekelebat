@@ -7,7 +7,7 @@ class Footer extends Component{
         super( props );
         this.state = {
             footerMenus: [],
-            loadedMenus: false
+            loadedfooterMenus: false
         }
     }
 
@@ -22,41 +22,44 @@ class Footer extends Component{
     fetchFooterMenu(){
         fetch( SekelebatSettings.domain + "/wp-json/menus/v1/menus/footer" )
             .then( response => {
+                console.log(response);
                 if(!response.ok){
-                    Error(response.statusText);
+                    throw Error(response.statusText);
                 }
                 return response.json();
             } )
             .then( result => {
-                this.setState( { footerMenus: result.items, loadedMenus: true} );
+                this.setState( { footerMenus: result.items, loadedfooterMenus: true} );
             } );
     };
 
     render(){
-        const footer = this.state.footerMenus.map( (el) => {
-            if( el.url.includes(SekelebatSettings.domain) ){
-                return(
-                    <li key={el.ID} className="footer-nav-item">
-                        <Link to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
-                            {el.title}
-                        </Link>
-                    </li>);
-            }else{
-                return(
-                    <li key={el.ID} className="footer-nav-item">
-                        <a href={el.url} className="nav-link">
-                            {el.title}
-                        </a>
-                    </li>);
-            }
-        } );
-
-
+        let footerItemMenus = '';
+        if( this.state.loadedfooterMenus ){
+            console.log(this.state.loadedfooterMenus);
+            footerItemMenus = this.state.footerMenus.map( (el) => {
+                if( el.url.includes( SekelebatSettings.domain ) ){
+                    return(
+                        <li key={el.ID} className="footer-nav-item">
+                            <Link to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
+                                {el.title}
+                            </Link>
+                        </li>);
+                }else{
+                    return(
+                        <li key={el.ID} className="footer-nav-item">
+                            <a href={el.url} className="nav-link">
+                                {el.title}
+                            </a>
+                        </li>);
+                }
+            } );
+        }
         return(
             <div id="row" className="row">
                 <div className="col-12">
                     <ul>
-                        {footer}
+                        { footerItemMenus }
                     </ul>
                 </div>
             </div>

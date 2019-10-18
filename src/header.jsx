@@ -6,7 +6,8 @@ class Header extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            menus: []
+            menus: [],
+            loadedMenus: false
         };
     }
 
@@ -21,35 +22,38 @@ class Header extends Component{
     fetchMenu(){
         fetch(SekelebatSettings.domain + "/wp-json/menus/v1/menus/primary")
             .then(response => {
+                console.log(response);
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
                 return response.json();
             })
             .then(result => {
-                this.setState( { menus: result.items } );
+                this.setState( { menus: result.items, loadedMenus: true } );
             });
     };
 
     render() {
-
-        const menuItem = this.state.menus.map( (el) =>{
-            if( el.url.includes(SekelebatSettings.domain) ){
-                return(
-                    <li key={el.ID} className="nav-item">
-                        <Link to={SekelebatSettings.path + el.url.split(SekelebatSettings.domain)[1]} className="nav-link">
-                            {el.title}
-                        </Link>
-                    </li>);
-            }else{
-                return(
-                    <li key={el.ID} className="nav-item">
-                        <a href={el.url} className="nav-link">
-                            {el.title}
-                        </a>
-                    </li>);
-            }
-        });
+        let menuItem = '';
+        if( this.state.loadedMenus ){
+            menuItem = this.state.menus.map( (el) =>{
+                if( el.url.includes( SekelebatSettings.domain ) ){
+                    return(
+                        <li key={el.ID} className="nav-item">
+                            <Link to={ SekelebatSettings.path + el.url.split( SekelebatSettings.domain )[1] } className="nav-link">
+                                {el.title}
+                            </Link>
+                        </li>);
+                }else{
+                    return(
+                        <li key={ el.ID } className="nav-item">
+                            <a href={ el.url } className="nav-link">
+                                { el.title }
+                            </a>
+                        </li>);
+                }
+            });
+        }
 
         return(
             <header id="masthead" className="site-header" role="banner">
@@ -57,7 +61,7 @@ class Header extends Component{
                     <div className="row w-100">
                         <div className="col-12">
                             <h1 className="site-title text-center">
-                                <Link to={SekelebatSettings.path}>Sekelebat</Link>
+                                <Link to={ SekelebatSettings.path }> { SekelebatSettings.title } </Link>
                             </h1>
                         </div>
                         <div className="col-12">
@@ -72,7 +76,7 @@ class Header extends Component{
                             </button>
                             <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                                 <ul className="navbar-nav">
-                                    {menuItem}
+                                    { menuItem }
                                 </ul>
                             </div>
                         </div>

@@ -96,15 +96,7 @@ class Archive extends Component{
                     return response.json();
                 } )
                 .then( result => {
-                    let webUrl = SekelebatSettings.domain +  "wp-json/";
-                    fetch( webUrl ).then( webResponse => {
-                        if ( !webResponse.ok ) {
-                            throw Error(webResponse.statusText);
-                        }
-                        return webResponse.json();
-                    } ).then( webResult => {
-                        this.setState({posts: result, pageName: archiveName, siteName: webResult["name"], totalPages: pagesNumb, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
-                    } );
+                    this.setState({posts: result, pageName: archiveName, siteName: SekelebatSettings.title, totalPages: pagesNumb, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
                 });
         }else if(currentType === "author"){
             const getSlug = pageUrl.split( SekelebatSettings.domain )[1];

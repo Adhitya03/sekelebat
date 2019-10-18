@@ -57,16 +57,7 @@ class Index extends Component{
                 return response.json();
             } )
             .then( result => {
-            postList = result;
-            let webUrl = SekelebatSettings.domain +  "wp-json/";
-            fetch( webUrl ).then( webResponse => {
-                if ( !webResponse.ok ) {
-                    throw Error(webResponse.statusText);
-                }
-                return webResponse.json();
-            } ).then( webResult => {
-                this.setState({posts: postList, webInfo: webResult, url: window.location.href, totalPages: pagesNumb,loadedPost: true});
-            } )
+                this.setState({posts: result, url: window.location.href, totalPages: pagesNumb, loadedPost: true});
         } )
     }
 
@@ -92,7 +83,7 @@ class Index extends Component{
                     />
                 );
             } );
-            webInfoTitle = this.state.webInfo['name'] + ' - ' + this.state.webInfo['description'];
+            webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
             pagination = <Pagination pagination={this.state.totalPages}/>;
             window.scrollTo(0, 0);
         }
