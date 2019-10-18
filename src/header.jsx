@@ -57,13 +57,13 @@ class Header extends Component{
         return(
             <header id="masthead" className="site-header container" role="banner">
                 <nav className="navbar navbar-expand-lg navbar-light ">
-                    <div className="row w-100">
-                        <div className="col-12">
-                            <h1 className="site-title text-center">
-                                <Link to={ SekelebatSettings.path }> { SekelebatSettings.title } </Link>
-                            </h1>
-                        </div>
-                        <div className="col-12">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <h1 className="site-title">
+                                    <Link to={ SekelebatSettings.path }> { SekelebatSettings.title } </Link>
+                                </h1>
+                            </div>
                             <button className="navbar-toggler"
                                     type="button"
                                     data-toggle="collapse"

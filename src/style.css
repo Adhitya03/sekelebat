@@ -1,8 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
 /* ==========================================================================
    General
    ========================================================================== */
 html {
     scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Raleway', sans-serif;
+}
+
+.site-title a{
+    font-size: 42px;
+    color: #222;
 }
 /* ==========================================================================
    Header & Navigation
@@ -10,4 +21,18 @@ html {
 
 .site-title{
     padding: 20px 0;
+}
+
+#navbarNav {
+    border-top: 3px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+#navbarNav a {
+    color: #222;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 25px 19px;
 }
