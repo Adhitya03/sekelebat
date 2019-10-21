@@ -16,7 +16,7 @@ import './style.css';
 const App = () => (
     <Aux>
         <Header />
-        <div className="container">
+        <div id="content" className="container">
             <div className="row">
                 <Switch>
                     <Route exact path={SekelebatSettings.path} component={Index} />

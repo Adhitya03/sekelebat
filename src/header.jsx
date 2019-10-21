@@ -54,6 +54,11 @@ class Header extends Component{
             });
         }
 
+        let site_title = <Link to={ SekelebatSettings.path }> { SekelebatSettings.title } </Link>;
+        if( SekelebatSettings.logo !== null ){
+            site_title = <Link to={ SekelebatSettings.path } rel="Home" className="custom-logo"> <img src={SekelebatSettings.logo[0]} alt={SekelebatSettings.title}/> </Link>;
+        }
+
         return(
             <header id="masthead" className="site-header container" role="banner">
                 <nav className="navbar navbar-expand-lg navbar-light ">
@@ -61,7 +66,7 @@ class Header extends Component{
                         <div className="row">
                             <div className="col-12">
                                 <h1 className="site-title">
-                                    <Link to={ SekelebatSettings.path }> { SekelebatSettings.title } </Link>
+                                    {site_title}
                                 </h1>
                             </div>
                             <button className="navbar-toggler"

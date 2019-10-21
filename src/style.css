@@ -9,18 +9,18 @@ html {
 
 body{
     font-family: 'Raleway', sans-serif;
+    color: #222;
 }
 
 .site-title a{
     font-size: 42px;
-    color: #222;
 }
 /* ==========================================================================
    Header & Navigation
    ========================================================================== */
 
 .site-title{
-    padding: 20px 0;
+    padding: 40px 0;
 }
 
 #navbarNav {
@@ -35,4 +35,76 @@ body{
     line-height: 1;
     text-transform: uppercase;
     padding: 25px 19px;
+}
+/* ==========================================================================
+   Content
+   ========================================================================== */
+#content {
+    margin-top: 40px;
+}
+
+/* ==========================================================================
+   Article
+   ========================================================================== */
+#content article {
+    box-sizing: border-box;
+    border: 2px solid #f4f4f4;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+#content article .featured-image img {
+    width: 100%;
+    box-shadow: 0 3px 12px -1px rgba(7,10,25,.2),0 22px 27px -20px rgba(7,10,25,.2);
+    transition: all .3s ease;
+}
+
+#content article .featured-image:hover img {
+    opacity: 1;
+    box-shadow: 0 15px 45px -5px rgba(7,10,25,.25);
+    -webkit-filter: brightness(1.07);
+    filter: brightness(1.07);
+    transform: translate(0,-2px);
+}
+
+#content article .title h2 {
+    color: #222;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: none;
+    margin: 20px 0;
+}
+
+#content article .footer-meta {
+    border-top: 2px solid #f4f4f4;
+    padding-top: 20px;
+    text-transform: lowercase;
+}
+
+#content article .footer-meta div, #content article .footer-meta a {
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+#content article .footer-meta div ,#content article .footer-meta div i, #content article .footer-meta div a{
+    color: #333;
+}
+
+#content article .footer-meta div:hover, #content article .footer-meta div:hover i, #content article .footer-meta div:hover a{
+    color: #233588;
+}
+
+#content article .footer-meta i {
+    margin-right: 5px;
+}
+
+#content article .footer-meta a{
+    text-decoration: none;
+}
+
+#content article .footer-meta div {
+    display: inline;
+    margin-right: 20px;
 }

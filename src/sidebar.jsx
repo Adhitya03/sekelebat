@@ -39,7 +39,7 @@ class Sidebar extends Component {
         }
 
         return (
-            <div id="sidebar" className="col-12 col-md-4" dangerouslySetInnerHTML={{ __html: sidebar }}></div>
+            <div id="sidebar" className="col-12 col-md-3" dangerouslySetInnerHTML={{ __html: sidebar }}></div>
         );
     }
 

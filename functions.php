@@ -43,23 +43,34 @@ if (is_plugin_active('wordpress-seo/wp-seo.php')) {
 }
 
 function sekelebat_load_scripts() {
-	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
+	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', '', '4.3.1', 'all');
+	wp_enqueue_style( 'fontawesome-style', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css', '', '5.3.1', 'all');
 
 	wp_enqueue_script( 'sekelebat-script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), '1.0', true );
 	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
 
 	$url = trailingslashit( home_url() );
 	$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );
-
+	$logo = null;
+	$custom_logo_id = get_theme_mod( 'custom_logo' );
+	if( !empty( $custom_logo_id ) ){
+		$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+	}
 	wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var SekelebatSettings = %s;', wp_json_encode( array(
 		'title' => get_bloginfo( 'name', 'display' ),
 		'description' => get_bloginfo( 'description', 'display' ),
 		'path' => $path,
 		'domain' =>  esc_url_raw( $url ),
+		'logo' => $logo,
 	) ) ) );
 }
 add_action( 'wp_enqueue_scripts', 'sekelebat_load_scripts' );
 
+// replaces the excerpt "[...]" to be "..."
+function sekelebat_excerpt_more() {
+	return esc_html__( '...', 'sekelebat' );
+}
+add_filter( 'excerpt_more', 'sekelebat_excerpt_more' );
 
 function sekelebat_config(){
 
@@ -69,6 +80,14 @@ function sekelebat_config(){
 			'footer' => __( 'Footer Menu', 'sekelebat' ),
 		)
 	);
+
+	$args = array(
+		'height'      => 90,
+		'width'      => 350,
+		'flex-width'  => true,
+		'header-text' => array( 'site-title', 'site-description' )
+	);
+	add_theme_support( 'custom-logo', $args);
 
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'title-tag' );
@@ -130,7 +149,7 @@ function get_sekelebat_get_image_src( $object, $field_name, $request ) {
 	if($object[ 'featured_media' ] == 0) {
 		return $object[ 'featured_media' ];
 	}
-	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'large', true );
+	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
 	return $feat_img_array[0];
 }
 

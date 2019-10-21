@@ -27,20 +27,13 @@ const content = ( props ) => {
                {postFeaturedImage}
            </div>
            <div className="title">
-                <h2>{props.title}</h2>
-           </div>
-           <div className="header-meta">
-               <div className="row">
-                   <div className="col-6 date">{props.date}</div>
-                   <div className="col-6 author"><Link to={SekelebatSettings.path + 'author/' + props.authorID}>{props.author}</Link></div>
-               </div>
+               <Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}><h2>{props.title}</h2></Link>
            </div>
            <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>
            <div className="footer-meta">
-               <div className="row">
-                   <div className="col-6 category">{postCategory}</div>
-                   <div className="col-6 link"><Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}>{props.title}</Link></div>
-               </div>
+               <div className="author"><i className="fas fa-user"></i><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
+               <div className="date"><i className="fas fa-calendar-alt"></i>{props.date}</div>
+               <div className="category"><i className="fas fa-tags"></i>{postCategory}</div>
            </div>
        </article>
     );

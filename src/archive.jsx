@@ -190,7 +190,7 @@ class Archive extends Component{
                 <Helmet>
                     <title>{taxTitle}</title>
                 </Helmet>
-                <div id="posts" className="col-12 col-md-8">
+                <div id="posts" className="col-12 col-md-9">
                     {content}
                     {pagination}
                 </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const category = ( props ) => {
     return(
-        <Link to={SekelebatSettings.path + "category/" + props.categorySlug + '/'}> { props.categoryName } </Link>
+        <Link to={SekelebatSettings.path + "category/" + props.categorySlug + '/'}>{ props.categoryName }</Link>
     );
 };
 

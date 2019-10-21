@@ -106,7 +106,7 @@ class Single extends Component {
             <Aux>
                 {notFound}
                 {meta}
-                <div id="single" className="col-12 col-md-8">
+                <div id="single" className="col-12 col-md-9">
                     {content}
                 </div>
             </Aux>
