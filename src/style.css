@@ -12,6 +12,10 @@ body{
     color: #222;
 }
 
+a, a:hover {
+    text-decoration: none;
+}
+
 .site-title a{
     font-size: 42px;
 }
@@ -69,10 +73,9 @@ body{
 
 #content article .title h2 {
     color: #222;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 700;
     line-height: 1.4;
-    text-transform: none;
     margin: 20px 0;
 }
 
@@ -82,26 +85,28 @@ body{
     text-transform: lowercase;
 }
 
-#content article .footer-meta div, #content article .footer-meta a {
+#content article .footer-meta div,
+#content article .footer-meta a {
     font-size: 16px;
     font-weight: 300;
     font-style: italic;
 }
 
-#content article .footer-meta div ,#content article .footer-meta div i, #content article .footer-meta div a{
+#content article .footer-meta div,
+#content article .footer-meta div i,
+#content article .footer-meta div a{
     color: #333;
 }
 
-#content article .footer-meta div:hover, #content article .footer-meta div:hover i, #content article .footer-meta div:hover a{
+#content article .footer-meta div:hover,
+#content article .footer-meta div:hover i,
+#content article .footer-meta div:hover a,
+#content article .title h2:hover{
     color: #233588;
 }
 
 #content article .footer-meta i {
     margin-right: 5px;
-}
-
-#content article .footer-meta a{
-    text-decoration: none;
 }
 
 #content article .footer-meta div {

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
+import { renderToStaticMarkup } from "react-dom/server";
+import parse, { domToReact } from "html-react-parser";
+import { BrowserRouter } from 'react-router-dom';
 
 class Sidebar extends Component {
 
@@ -33,13 +37,33 @@ class Sidebar extends Component {
 
     render() {
 
+        const options = {
+            replace: ({ name, attribs, children }) => {
+                if( name === "a" ) {
+                    if( attribs.href.includes( SekelebatSettings.domain ) ){
+                        let style = attribs.style;
+                        return(
+                                <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class}>
+                                    {domToReact(children)}
+                                </Link>
+                            );
+                    }else{
+                        return(
+                            <a href={ attribs.href } className={attribs.class} style={attribs.style}>
+                                {domToReact(children)}
+                            </a>
+                        );
+                    }
+                }
+            }
+        };
+
         let sidebar = '';
         if( this.state.loadedSidebar ){
-            sidebar = this.state.widgets;
+            sidebar = parse(this.state.widgets, options);
         }
-
         return (
-            <div id="sidebar" className="col-12 col-md-3" dangerouslySetInnerHTML={{ __html: sidebar }}></div>
+            <div id="sidebar" className="col-12 col-md-3">{sidebar}</div>
         );
     }
 
