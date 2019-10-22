@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito|Open+Sans&display=swap');
 
 /* ==========================================================================
    General
@@ -8,17 +8,31 @@ html {
 }
 
 body{
-    font-family: 'Raleway', sans-serif;
-    color: #222;
+    font-family: 'Open Sans', sans-serif;
+    color: #848484;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: 'Nunito', sans-serif;
+}
+
+a {
+    color: #848484;;
 }
 
 a, a:hover {
     text-decoration: none;
 }
 
-.site-title a{
-    font-size: 42px;
+img{
+    max-width: 100%;
 }
+
 /* ==========================================================================
    Header & Navigation
    ========================================================================== */
@@ -27,9 +41,13 @@ a, a:hover {
     padding: 40px 0;
 }
 
+.site-title a{
+    font-size: 42px;
+}
+
 #navbarNav {
-    border-top: 3px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 2px solid #222;
+    border-bottom: 1px solid #222;
 }
 
 #navbarNav a {
@@ -41,29 +59,29 @@ a, a:hover {
     padding: 25px 19px;
 }
 /* ==========================================================================
-   Content
+   Content Area
    ========================================================================== */
 #content {
     margin-top: 40px;
 }
 
 /* ==========================================================================
-   Article
+   Blog Post Area
    ========================================================================== */
-#content article {
+#content #blog-post {
     box-sizing: border-box;
     border: 2px solid #f4f4f4;
     padding: 20px;
     margin-bottom: 40px;
 }
 
-#content article .featured-image img {
+.featured-image img {
     width: 100%;
     box-shadow: 0 3px 12px -1px rgba(7,10,25,.2),0 22px 27px -20px rgba(7,10,25,.2);
     transition: all .3s ease;
 }
 
-#content article .featured-image:hover img {
+.featured-image:hover img {
     opacity: 1;
     box-shadow: 0 15px 45px -5px rgba(7,10,25,.25);
     -webkit-filter: brightness(1.07);
@@ -71,45 +89,97 @@ a, a:hover {
     transform: translate(0,-2px);
 }
 
-#content article .title h2 {
+#content #blog-post .title h2 {
     color: #222;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 1.4;
     margin: 20px 0;
+    line-height: 24px;
+    transition: all 500ms ease;
 }
 
-#content article .footer-meta {
+#content #blog-post .footer-meta {
     border-top: 2px solid #f4f4f4;
     padding-top: 20px;
     text-transform: lowercase;
 }
 
-#content article .footer-meta div,
-#content article .footer-meta a {
-    font-size: 16px;
+#content #blog-post .footer-meta div,
+#content #blog-post .footer-meta a {
+    font-size: 14px;
     font-weight: 300;
     font-style: italic;
 }
 
-#content article .footer-meta div,
-#content article .footer-meta div i,
-#content article .footer-meta div a{
-    color: #333;
+#content #blog-post .footer-meta div,
+#content #blog-post .footer-meta div i,
+#content #blog-post .footer-meta div a{
+    color: #555;
 }
 
-#content article .footer-meta div:hover,
-#content article .footer-meta div:hover i,
-#content article .footer-meta div:hover a,
-#content article .title h2:hover{
+#content #blog-post .footer-meta div:hover,
+#content #blog-post .footer-meta div:hover i,
+#content #blog-post .footer-meta div a:hover,
+#content #blog-post .title h2:hover{
     color: #233588;
 }
 
-#content article .footer-meta i {
+#content #blog-post .footer-meta i {
     margin-right: 5px;
 }
 
-#content article .footer-meta div {
+#content #blog-post .footer-meta div {
     display: inline;
     margin-right: 20px;
+}
+
+/* ==========================================================================
+   Single Post Area
+   ========================================================================== */
+#content #single-post {
+    box-sizing: border-box;
+    border: 2px solid #f4f4f4;
+    padding: 20px;
+}
+
+#content #single-post .entry-header {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f4f4f4;
+}
+
+#content #single-post .entry-header .title h2 {
+    color: #222;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 20px 0;
+    line-height: 24px;
+    transition: all 500ms ease;
+}
+
+#content #single-post .content{
+    margin-top: 20px;
+}
+
+#content #single-post .entry-header .header-meta div {
+    display: inline;
+    text-transform: lowercase;
+}
+
+#content #single-post .entry-footer {
+    clear: both;
+}
+
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+#sidebar .widget-wrapper{
+    margin-bottom: 40px;
+}
+
+#sidebar .widget-wrapper .widget-title{
+    color: #222222;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: capitalize;
 }

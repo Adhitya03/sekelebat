@@ -73,6 +73,7 @@ class Single extends Component {
                     featuredImage={this.state.post.sekelebat_featured_image}
                     author={this.state.post.sekelebat_author_name}
                     date={this.state.post.sekelebat_published_date}
+                    authorID={this.state.post.author}
                 />;
             }else if(this.state.post.type === 'page'){
                 let page_title = '';
@@ -106,9 +107,9 @@ class Single extends Component {
             <Aux>
                 {notFound}
                 {meta}
-                <div id="single" className="col-12 col-md-9">
+                <article id="single-post" className="col-12 col-md-9">
                     {content}
-                </div>
+                </article>
             </Aux>
         );
     }

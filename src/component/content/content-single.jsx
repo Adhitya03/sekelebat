@@ -1,4 +1,7 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import parse from "html-react-parser";
+
 import Aux from '../../hoc/Auxiliary';
 import Category from '../category';
 import Tag from '../tag';
@@ -32,16 +35,29 @@ const contentSingle = ( props ) =>{
         postFeaturedImage = <img src={props.featuredImage} alt={props.title}/>;
     }
 
+    const content = parse(props.content);
+
     return(
         <Aux>
-            <div className="category">{postCategory}</div>
-            <div className="featured-image">{postFeaturedImage}</div>
-            <div className="title">
-                <h1>{props.title}</h1>
+            <div className="entry-header">
+                <div className="title">
+                    <h2>{props.title}</h2>
+                </div>
+                <div className="header-meta">
+                    <div className="date">{props.date} by </div>
+                    <div className="author"><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
+                </div>
             </div>
-            <div className="content" dangerouslySetInnerHTML={{__html: props.content}}></div>
-            <div className="tag">{postTag}</div>
-            <div className="author">{props.author}</div>
+            <div className="entry-content">
+                <div className="featured-image">{postFeaturedImage}</div>
+                <div className="content">{content}</div>
+            </div>
+            <div className="entry-footer">
+                <div className="footer-meta">
+                    <div className="category">Filed Under : {postCategory}</div>
+                    <div className="tag">Tagged With : {postTag}</div>
+                </div>
+            </div>
         </Aux>
     );
 };

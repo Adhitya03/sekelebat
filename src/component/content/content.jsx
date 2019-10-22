@@ -22,7 +22,7 @@ const content = ( props ) => {
     } );
 
     return(
-       <article>
+       <article id="blog-post">
            <div className="featured-image">
                {postFeaturedImage}
            </div>
