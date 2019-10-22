@@ -139,6 +139,7 @@ img{
 #content #single-post {
     box-sizing: border-box;
     border: 2px solid #f4f4f4;
+    margin-bottom: 40px;
     padding: 20px;
 }
 
@@ -208,15 +209,20 @@ img{
     display: inline-block;
 }
 
-#footer, #footer ul li a {
+#footer, #footer a:hover {
     color: #c1c2c7;
     font-size: 14px;
 }
 
-#footer .footer-menu{
+#footer a {
+    color: #fff;
+}
+
+#footer .footer-menu {
     text-align: right;
 }
 
-#footer .copyright{
-    padding: .5rem 1rem;
+#footer .copyright, #footer .nav-link {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

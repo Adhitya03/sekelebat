@@ -58,7 +58,7 @@ class Footer extends Component{
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 col-12">
-                            <div className="copyright">© Copyright 2019 {SekelebatSettings.title} All rights reserved. </div>
+                            <div className="copyright">© Copyright 2019 {SekelebatSettings.title}. All rights reserved. Powered by <a href="https://wordpress.org/">Wordpress</a>.</div>
                         </div>
                         <div className="col-md-6 col-12 footer-menu">
                             <ul>
