@@ -54,10 +54,13 @@ class Footer extends Component{
             } );
         }
         return(
-            <div id="row">
+            <div id="footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-md-6 col-12">
+                            <div className="copyright">© Copyright 2019 {SekelebatSettings.title} All rights reserved. </div>
+                        </div>
+                        <div className="col-md-6 col-12 footer-menu">
                             <ul>
                                 { footerItemMenus }
                             </ul>

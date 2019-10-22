@@ -9,7 +9,7 @@ html {
 
 body{
     font-family: 'Open Sans', sans-serif;
-    color: #848484;
+    color: #555;
 }
 
 h1,
@@ -22,7 +22,7 @@ h6{
 }
 
 a {
-    color: #848484;;
+    color: #555;
 }
 
 a, a:hover {
@@ -121,7 +121,7 @@ img{
 #content #blog-post .footer-meta div:hover i,
 #content #blog-post .footer-meta div a:hover,
 #content #blog-post .title h2:hover{
-    color: #233588;
+    color: #3f57c4;
 }
 
 #content #blog-post .footer-meta i {
@@ -170,6 +170,15 @@ img{
     clear: both;
 }
 
+#content #single-post .entry-header .header-meta .author a {
+    color: #222;
+}
+
+#content #single-post .entry-header .header-meta .author a:hover {
+    color: #3f57c4;
+}
+
+
 /* ==========================================================================
    Sidebar
    ========================================================================== */
@@ -182,4 +191,32 @@ img{
     font-size: 22px;
     font-weight: 600;
     text-transform: capitalize;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+#footer {
+    background-color: #303443;
+}
+
+#footer ul {
+    margin-bottom: 0;
+}
+
+#footer ul li {
+    display: inline-block;
+}
+
+#footer, #footer ul li a {
+    color: #c1c2c7;
+    font-size: 14px;
+}
+
+#footer .footer-menu{
+    text-align: right;
+}
+
+#footer .copyright{
+    padding: .5rem 1rem;
 }
