@@ -99,7 +99,7 @@ function sekelebat_config(){
 add_action( 'after_setup_theme', 'sekelebat_config', 0 );
 
 // registering sidebar
-function buildx_sidebar(){
+function sekelebat_sidebar(){
 
 	register_sidebar(
 		array(
@@ -114,8 +114,27 @@ function buildx_sidebar(){
 	);
 
 }
-add_action('widgets_init', 'buildx_sidebar');
+add_action('widgets_init', 'sekelebat_sidebar');
 
+/**
+ * Generate custom search form
+ *
+ * @param string $form Form HTML.
+ * @return string Modified form HTML.
+ */
+function sekelebat_search_form() {
+	$form = '<form role="search" method="get" class="form-inline" action="'.esc_url( home_url( '/' ) ).'">
+				<div class="input-group">
+					<input type="search" class="form-control" placeholder="'.esc_attr_x( 'Search here', 'placeholder', 'sekelebat' ).'" value="'.get_search_query().'" name="s">
+					<div class="input-group-append">
+						<button class="btn" type="submit"><span class="fas fa-search"></span></button>
+					</div>
+				</div>
+			</form>';
+
+	return $form;
+}
+add_filter( 'get_search_form', 'sekelebat_search_form' );
 
 function sekelebat_post_archive( $args, $request ) {
 

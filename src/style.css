@@ -171,11 +171,15 @@ img{
     clear: both;
 }
 
-#content #single-post .entry-header .header-meta .author a {
+#content #single-post .entry-header .header-meta .author a,
+#content #single-post .entry-footer .footer-meta .category a,
+#content #single-post .entry-footer .footer-meta .tag a{
     color: #222;
 }
 
-#content #single-post .entry-header .header-meta .author a:hover {
+#content #single-post .entry-header .header-meta .author a:hover,
+#content #single-post .entry-footer .footer-meta .category a:hover,
+#content #single-post .entry-footer .footer-meta .tag a:hover {
     color: #3f57c4;
 }
 
