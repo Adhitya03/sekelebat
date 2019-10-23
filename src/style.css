@@ -246,6 +246,47 @@ img{
 }
 
 /* ==========================================================================
+   Pagination
+   ========================================================================== */
+#pagination{
+    margin-bottom: 40px;
+}
+
+#pagination .pagination {
+    justify-content: center;
+    margin: 0;
+}
+
+#pagination .pagination li {
+    display: inline-block;
+    margin: 0 3px;
+    text-align: center;
+}
+
+#pagination .pagination li:hover a{
+    background: #233588;
+    color: #fff;
+    border: 2px solid #233588;
+}
+
+#pagination .pagination li a {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #e7e7e7;
+    color: #848484;
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    height: 55px;
+    padding: 13px 0;
+    transition: all 500ms ease 0s;
+    width: 55px;
+    border-radius: 3px;
+}
+
+#pagination .pagination li a:hover{
+    z-index: 2;
+}
+/* ==========================================================================
    Footer
    ========================================================================== */
 #footer {

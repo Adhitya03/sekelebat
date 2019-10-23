@@ -9,17 +9,21 @@ const pagination = ( props ) => {
     }
     for ( let i = 1; i <= props.pagination; i++ ){
         if( i === 1){
-            pagesNumb.push(<span><Link to={SekelebatSettings.path + archive}> {i} </Link></span>);
+            pagesNumb.push(<li><Link to={SekelebatSettings.path + archive}> {i} </Link></li>);
         }else{
-            pagesNumb.push(<span><Link to={SekelebatSettings.path + archive + 'page/' + i + '/'}> {i} </Link></span>);
+            pagesNumb.push(<li><Link to={SekelebatSettings.path + archive + 'page/' + i + '/'}> {i} </Link></li>);
         }
     }
 
     const pageLink = pagesNumb.map( el => el );
 
     return(
-        <div className='pagination'>
-            {pageLink}
+        <div id="pagination" className="row">
+            <div className="col-12">
+                <ul className="pagination">
+                    {pageLink}
+                </ul>
+            </div>
         </div>
     );
 };
