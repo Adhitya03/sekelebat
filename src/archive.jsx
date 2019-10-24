@@ -35,7 +35,6 @@ class Archive extends Component{
     }
 
     fetchPosts(){
-
         const pageUrl = window.location.href;
         const currentType = pageUrl.split( SekelebatSettings.domain )[1].split( '/' )[0];
         let currentSlug = '';
@@ -117,6 +116,9 @@ class Archive extends Component{
                     const postList = result[1];
                     this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
+        }else if( currentType.includes( 'search' ) ){
+            const getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
+            console.log(getQuery);
         }else{
             let postList = '';
             let type = 'categories';
@@ -160,7 +162,7 @@ class Archive extends Component{
         let pagination = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
-                notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
+                /*notFound = <Redirect to={SekelebatSettings.path + '404'}/>;*/
             }else{
                 content = this.state.posts.map( el => {
                     return (
@@ -185,7 +187,7 @@ class Archive extends Component{
         }
 
         return (
-            <Aux>
+            <Aux>Archive
                 {notFound}
                 <Helmet>
                     <title>{taxTitle}</title>
