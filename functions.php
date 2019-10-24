@@ -125,7 +125,7 @@ add_action('widgets_init', 'sekelebat_sidebar');
 function sekelebat_search_form() {
 	$form = '<form role="search" method="get" class="form-inline" action="'.esc_url( home_url( '/' ) ).'">
 				<div class="input-group">
-					<input type="search" class="form-control" placeholder="'.esc_attr_x( 'Search here', 'placeholder', 'sekelebat' ).'" value="'.get_search_query().'" name="s">
+					<input type="search" class="form-control" placeholder="'.esc_attr_x( 'Search here', 'placeholder', 'sekelebat' ).'" name="s">
 					<div class="input-group-append">
 						<button class="btn" type="submit"><span class="fas fa-search"></span></button>
 					</div>

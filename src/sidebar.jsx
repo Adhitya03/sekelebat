@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { renderToStaticMarkup } from 'react-dom/server';
 import parse, { domToReact } from "html-react-parser";
 
 class Sidebar extends Component {
@@ -59,6 +60,7 @@ class Sidebar extends Component {
         let sidebar = '';
         if( this.state.loadedSidebar ){
             sidebar = parse(this.state.widgets, options);
+            console.log(sidebar);
         }
         return (
             <div id="sidebar" className="col-12 col-md-3">{sidebar}</div>
