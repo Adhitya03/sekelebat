@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import parse from "html-react-parser";
+import parse,{ domToReact } from "html-react-parser";
 
 import Aux from '../../hoc/Auxiliary';
 import Category from '../category';
@@ -35,7 +35,22 @@ const contentSingle = ( props ) =>{
         postFeaturedImage = <img src={props.featuredImage} alt={props.title}/>;
     }
 
-    const content = parse(props.content);
+    const options = {
+        replace: ({ name, attribs, children }) => {
+            if( name === "a" ) {
+                console.log(attribs);
+                if( attribs.href.includes( SekelebatSettings.domain ) ){
+                    return(
+                        <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class} title={attribs.title}>
+                            {domToReact(children)}
+                        </Link>
+                    );
+                }
+            }
+        }
+    };
+
+    const content = parse(props.content, options);
 
     return(
         <Aux>

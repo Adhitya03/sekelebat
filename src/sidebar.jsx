@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { renderToStaticMarkup } from 'react-dom/server';
 import parse, { domToReact } from "html-react-parser";
 
 class Sidebar extends Component {
@@ -40,7 +39,6 @@ class Sidebar extends Component {
             replace: ({ name, attribs, children }) => {
                 if( name === "a" ) {
                     if( attribs.href.includes( SekelebatSettings.domain ) ){
-                        let style = attribs.style;
                         return(
                                 <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class} title={attribs.title}>
                                     {domToReact(children)}
@@ -48,7 +46,7 @@ class Sidebar extends Component {
                             );
                     }else{
                         return(
-                            <a href={ attribs.href } className={attribs.class} style={attribs.style}>
+                            <a href={ attribs.href } className={attribs.class}>
                                 {domToReact(children)}
                             </a>
                         );
