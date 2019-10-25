@@ -33,6 +33,7 @@ const App = () => (
                     <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                     <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />
                     <Route exact path={SekelebatSettings.path + 'search:filter?'} component={Search} />
+                    <Route exact path={SekelebatSettings.path + 'search:filter?/page/:slug'} component={Search} />{/*Search page pagination*/}
                     <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />
                     <Route path={SekelebatSettings.path + ':slug'} component={Single} />
                 </Switch>

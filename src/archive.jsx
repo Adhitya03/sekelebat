@@ -42,7 +42,7 @@ class Archive extends Component{
             let pagesNumb = null;
             let archiveUrl = '';
             let currentNumb = null;
-            if( pageUrl.includes('page') ){
+            if( pageUrl.includes('/page/') ){
                 const get_archive_url = pageUrl.split('page/');
                 currentNumb = get_archive_url[1].split('/')[0];
                 archiveUrl = get_archive_url[0];
@@ -101,7 +101,7 @@ class Archive extends Component{
             const getSlug = pageUrl.split( SekelebatSettings.domain )[1];
             const currentSlug = getSlug.split( 'author/' );
             let authorID = currentSlug[1].replace( '/', '' );
-            if( currentSlug[1].includes( 'page' ) ){
+            if( currentSlug[1].includes( '/page/' ) ){
                 authorID = currentSlug[1].split( '/page/' )[0];
             }
             const url = SekelebatSettings.domain + "wp-json/sekelebat/v1/" + getSlug;

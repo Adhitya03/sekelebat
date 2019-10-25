@@ -26,15 +26,30 @@ class Search extends Component {
         this.fetchPosts();
     }
 
+    componentDidUpdate() {
+        this.fetchPosts();
+    }
+
     shouldComponentUpdate() {
         return this.state.url !== window.location.href;
     }
 
     fetchPosts(){
         const pageUrl = window.location.href;
-        const getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
-        const url = SekelebatSettings.domain + "wp-json/wp/v2/search?search=" + getQuery;
+        let getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
+        let currentNumb = null;
+        let searchQuery = '';
         let pagesNumb;
+        if( pageUrl.includes('/page/') ){
+            const get_searchUrl_url = pageUrl.split('/page/');
+            currentNumb = get_searchUrl_url[1].split('/')[0];
+            getQuery = get_searchUrl_url[0].split( SekelebatSettings.domain + 'search?s=' )[1];
+            searchQuery = getQuery + '&page=' + currentNumb;
+            console.log(searchQuery);
+        }else{
+            searchQuery = getQuery;
+        }
+        const url = SekelebatSettings.domain + "wp-json/wp/v2/search?search=" + searchQuery;
         fetch( url )
             .then( response => {
                 if(!response.ok){
@@ -75,6 +90,7 @@ class Search extends Component {
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
                 pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages}/>;
             }
+            window.scrollTo(0, 0);
         }
 
         return (
