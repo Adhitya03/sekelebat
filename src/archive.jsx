@@ -116,10 +116,21 @@ class Archive extends Component{
                     const postList = result[1];
                     this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
-        }else if( currentType.includes( 'search' ) ){
+        }/*else if( currentType.includes( 'search' ) ){
             const getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
-            console.log(getQuery);
-        }else{
+            const url = SekelebatSettings.domain + "wp-json/wp/v2/search?search=" + getQuery;
+            console.log()
+            fetch( url )
+                .then( response => {
+                    if(!response.ok){
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                } )
+                .then( result => {
+                    this.setState({posts: result, pageName: "Search : " + getQuery, siteName: SekelebatSettings.title, totalPages: 1, type: "search", slug: "search", url: window.location.href, loadedPost: true});
+                });
+        }*/else{
             let postList = '';
             let type = 'categories';
             currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
