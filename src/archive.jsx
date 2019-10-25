@@ -8,8 +8,8 @@ import NotFound from "./component/404";
 
 class Archive extends Component{
 
-    constructor(props) {
-        super(props);
+    constructor( props ) {
+        super( props );
         this.state = {
             posts: [],
             pageName: '',
@@ -158,7 +158,7 @@ class Archive extends Component{
         let pagination = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
-                content = <NotFound />
+                content = <NotFound />;
                 taxTitle = "Not Found - " + SekelebatSettings.title;
             }else{
                 content = this.state.posts.map( el => {
