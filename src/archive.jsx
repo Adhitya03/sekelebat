@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Helmet} from "react-helmet/es/Helmet";
-import {Redirect} from "react-router-dom";
 
 import Content from './component/content/content';
 import Aux from "./hoc/Auxiliary";
 import Pagination from "./component/paginations";
+import NotFound from "./component/404";
 
 class Archive extends Component{
 
@@ -116,21 +116,7 @@ class Archive extends Component{
                     const postList = result[1];
                     this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
-        }/*else if( currentType.includes( 'search' ) ){
-            const getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
-            const url = SekelebatSettings.domain + "wp-json/wp/v2/search?search=" + getQuery;
-            console.log()
-            fetch( url )
-                .then( response => {
-                    if(!response.ok){
-                        throw Error(response.statusText);
-                    }
-                    return response.json();
-                } )
-                .then( result => {
-                    this.setState({posts: result, pageName: "Search : " + getQuery, siteName: SekelebatSettings.title, totalPages: 1, type: "search", slug: "search", url: window.location.href, loadedPost: true});
-                });
-        }*/else{
+        }else{
             let postList = '';
             let type = 'categories';
             currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
@@ -149,7 +135,7 @@ class Archive extends Component{
                 } )
                 .then( result => {
                     postList = result[1];
-                    if( result[0] !== null ){
+                    if( result[0] !== 0 ){
                         let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ type + "/" + result[0];
                         fetch( taxUrl ).then( webResponse => {
                             if ( !webResponse.ok ) {
@@ -169,11 +155,11 @@ class Archive extends Component{
     render() {
         let content = <div className="loading">Loading  gan</div>;
         let taxTitle = '';
-        let notFound = '';
         let pagination = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
-                /*notFound = <Redirect to={SekelebatSettings.path + '404'}/>;*/
+                content = <NotFound />
+                taxTitle = "Not Found - " + SekelebatSettings.title;
             }else{
                 content = this.state.posts.map( el => {
                     return (
@@ -198,8 +184,7 @@ class Archive extends Component{
         }
 
         return (
-            <Aux>Archive
-                {notFound}
+            <Aux>
                 <Helmet>
                     <title>{taxTitle}</title>
                 </Helmet>

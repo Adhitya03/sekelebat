@@ -8,6 +8,7 @@ import Aux from './hoc/Auxiliary';
 import Single from './single';
 import Index from './index';
 import Archive from './archive';
+import Search from './search';
 import Sidebar from './sidebar';
 import NotFound from './component/404';
 
@@ -31,7 +32,7 @@ const App = () => (
                     <Route exact path={SekelebatSettings.path + 'author/:slug/page/:slug'} component={Archive} />{/*Author archive page pagination*/}
                     <Route exact path={SekelebatSettings.path + '(category|tag)/:slug'} component={Archive} />
                     <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />
-                    <Route exact path={SekelebatSettings.path + 'search:filter?'} component={Archive} />
+                    <Route exact path={SekelebatSettings.path + 'search:filter?'} component={Search} />
                     <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />
                     <Route path={SekelebatSettings.path + ':slug'} component={Single} />
                 </Switch>

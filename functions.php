@@ -220,6 +220,9 @@ function category_route_handler( $data )
 		$page = '';
 	}
 	$categoryID = get_category_by_slug($slug)->cat_ID;
+	if( $categoryID == null ){
+		$categoryID = 0; // Impossible to Category's/Tag's taxonomy use this ID, WordPress default Category's ID start from 1, return empty json
+	}
 	$url = site_url().'/wp-json/wp/v2/posts?categories='.$categoryID.$page;
 	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
@@ -240,6 +243,9 @@ function tag_route_handler( $data )
 		$page = '';
 	}
 	$tagID = get_term_by( 'slug', $slug, 'post_tag' )->term_id;
+	if( $tagID == null ){
+		$tagID = 0; // Impossible to Category's/Tag's taxonomy use this ID, WordPress default Tag's ID start from 2, return empty json
+	}
 	$url = site_url().'/wp-json/wp/v2/posts?tags='.$tagID.$page;
 	$request = WP_REST_Request::from_url( $url );
 	$response = rest_do_request( $request );
