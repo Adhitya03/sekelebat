@@ -38,10 +38,9 @@ const contentSingle = ( props ) =>{
     const options = {
         replace: ({ name, attribs, children }) => {
             if( name === "a" ) {
-                console.log(attribs);
                 if( attribs.href.includes( SekelebatSettings.domain ) ){
                     return(
-                        <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class} title={attribs.title}>
+                        <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class} title={attribs.title} target={attribs.target} rel={attribs.rel}>
                             {domToReact(children)}
                         </Link>
                     );
