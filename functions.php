@@ -344,12 +344,12 @@ function sekelebat_register_fields() {
 		'callback' => 'post_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/categories/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
+	register_rest_route('sekelebat/v1', '/category/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'category_route_handler',
 	));
 
-	register_rest_route('sekelebat/v1', '/tags/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
+	register_rest_route('sekelebat/v1', '/tag/(?P<url>[a-zA-Z0-9-+/:?]+)', array(
 		'methods' => 'GET',
 		'callback' => 'tag_route_handler',
 	));

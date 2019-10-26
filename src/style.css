@@ -267,13 +267,7 @@ img{
     text-align: center;
 }
 
-#pagination .pagination li:hover a{
-    background: #233588;
-    color: #fff;
-    border: 2px solid #233588;
-}
-
-#pagination .pagination li a {
+#pagination .pagination li a, #pagination .pagination li span{
     background: #fff none repeat scroll 0 0;
     border: 2px solid #e7e7e7;
     color: #848484;
@@ -287,7 +281,13 @@ img{
     border-radius: 3px;
 }
 
-#pagination .pagination li a:hover{
+#pagination .pagination li:hover a, #pagination .pagination li span{
+    background: #233588;
+    color: #fff;
+    border: 2px solid #233588;
+}
+
+#pagination .pagination li a:hover, #pagination .pagination li span{
     z-index: 2;
 }
 /* ==========================================================================

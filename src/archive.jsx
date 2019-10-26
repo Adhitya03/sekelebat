@@ -16,6 +16,7 @@ class Archive extends Component{
             siteName: '',
             url: null,
             totalPages: null,
+            currentPage: null,
             type: '',
             slug: '',
             loadedPost: false
@@ -39,12 +40,12 @@ class Archive extends Component{
         const currentType = pageUrl.split( SekelebatSettings.domain )[1].split( '/' )[0];
         let currentSlug = '';
         if( currentType === "archives" ){
-            let pagesNumb = null;
+            let totalPages = null;
             let archiveUrl = '';
-            let currentNumb = null;
+            let currentpage = 1;
             if( pageUrl.includes('/page/') ){
                 const get_archive_url = pageUrl.split('page/');
-                currentNumb = get_archive_url[1].split('/')[0];
+                currentpage = get_archive_url[1].split('/')[0];
                 archiveUrl = get_archive_url[0];
             }else{
                 archiveUrl = pageUrl;
@@ -75,10 +76,9 @@ class Archive extends Component{
 
             args = args + '&date_query_column=post_modified';
 
-            if( currentNumb !== null ){
-                args = args + '&page=' + currentNumb;
+            if( currentpage !== 1 ){
+                args = args + '&page=' + currentpage;
             }
-
             const url = SekelebatSettings.domain +  "wp-json/wp/v2/posts" + args;
 
             fetch( url )
@@ -89,20 +89,22 @@ class Archive extends Component{
                     for (var pair of response.headers.entries()) {
                         // getting the total number of pages
                         if (pair[0] === 'x-wp-totalpages') {
-                            pagesNumb = pair[1];
+                            totalPages = pair[1];
                         }
                     }
                     return response.json();
                 } )
                 .then( result => {
-                    this.setState({posts: result, pageName: archiveName, siteName: SekelebatSettings.title, totalPages: pagesNumb, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
+                    this.setState({posts: result, pageName: archiveName, siteName: SekelebatSettings.title, totalPages: totalPages, currentPage: currentpage, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
                 });
         }else if(currentType === "author"){
+            let currentpage = 1;
             const getSlug = pageUrl.split( SekelebatSettings.domain )[1];
             const currentSlug = getSlug.split( 'author/' );
             let authorID = currentSlug[1].replace( '/', '' );
             if( currentSlug[1].includes( '/page/' ) ){
                 authorID = currentSlug[1].split( '/page/' )[0];
+                currentpage = currentSlug[1].split( '/page/' )[1].replace( '/', '');
             }
             const url = SekelebatSettings.domain + "wp-json/sekelebat/v1/" + getSlug;
             fetch( url )
@@ -114,18 +116,20 @@ class Archive extends Component{
                 } )
                 .then( result => {
                     const postList = result[1];
-                    this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], type: "author", slug: authorID, url: window.location.href, loadedPost: true});
+                    this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], currentPage: currentpage, type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
         }else{
             let postList = '';
-            let type = 'categories';
-            currentSlug = window.location.href.split(SekelebatSettings.domain)[1].split('/')[1];
-            if( currentType === "tag" ){
-                type = 'tags';
-            }
-            const typeUrl = type === 'categories' ? 'category' : 'tag';
-            const slug = window.location.href.split( SekelebatSettings.domain + typeUrl + '/' )[1];
+            console.log(currentType);
+            const type = currentType === 'category' ? 'category' : 'tag';
+            const typeUrl = currentType === 'category' ? 'categories' : 'tags';
+            const slug = window.location.href.split( SekelebatSettings.domain + type + '/' )[1];
             const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + slug;
+            let currentPage = 1;
+            if( slug.includes( '/page/' ) ){
+                currentPage = slug.split('/page/')[1].replace( '/', '' );
+            }
+
             fetch( url )
                 .then( response => {
                     if ( !response.ok ) {
@@ -136,14 +140,14 @@ class Archive extends Component{
                 .then( result => {
                     postList = result[1];
                     if( result[0] !== 0 ){
-                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ type + "/" + result[0];
+                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ typeUrl + "/" + result[0];
                         fetch( taxUrl ).then( webResponse => {
                             if ( !webResponse.ok ) {
                                 throw Error(webResponse.statusText);
                             }
                             return webResponse.json();
                         } ).then( taxResult => { /*taxResult : Taxonomi Result*/
-                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], type: currentType, slug: currentSlug, url: window.location.href, loadedPost: true});
+                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: currentType, slug: slug.replace( '/', '' ), url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});
@@ -178,7 +182,7 @@ class Archive extends Component{
                     );
                 } );
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
-                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages}/>;
+                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentpage={this.state.currentPage}/>;
             }
             window.scrollTo(0, 0);
         }

@@ -14,6 +14,7 @@ class Index extends Component{
             webInfo: [],
             url: null,
             totalPages: null,
+            currentpage: null,
             loadedPost: false
         };
     }
@@ -34,14 +35,14 @@ class Index extends Component{
         let postList = '';
         const pageUrl = window.location.href;
         let url = '';
+        let currentpage = 1;
+        let totalPages = '';
         if( pageUrl.includes('page') ){
-            const pageNumb = pageUrl.split('/');
-            url = SekelebatSettings.domain +  "wp-json/wp/v2/posts?page=" + pageNumb[pageNumb.length - 2];
+            currentpage = pageUrl.split('/page/')[1].replace( '/', '');
+            url = SekelebatSettings.domain +  "wp-json/wp/v2/posts?page=" + currentpage;
         }else{
              url = SekelebatSettings.domain +  "wp-json/wp/v2/posts";
         }
-
-        let pagesNumb = '';
         fetch( url )
             .then( response => {
                 if ( !response.ok ) {
@@ -50,13 +51,14 @@ class Index extends Component{
                 for (var pair of response.headers.entries()) {
                     // getting the total number of pages
                     if (pair[0] === 'x-wp-totalpages') {
-                        pagesNumb = pair[1];
+                        totalPages = pair[1];
                     }
                 }
                 return response.json();
             } )
             .then( result => {
-                this.setState({posts: result, url: window.location.href, totalPages: pagesNumb, loadedPost: true});
+                console.log(currentpage);
+                this.setState({posts: result, url: window.location.href, totalPages: totalPages, currentpage: currentpage, loadedPost: true});
         } )
     }
 
@@ -83,7 +85,7 @@ class Index extends Component{
                 );
             } );
             webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
-            pagination = <Pagination pagination={this.state.totalPages}/>;
+            pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
             window.scrollTo(0, 0);
         }
 
