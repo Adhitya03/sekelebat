@@ -10,11 +10,14 @@ const content = ( props ) => {
         postFeaturedImage = <img src={props.featuredImage} alt={props.title}/>;
     }
 
-    const postCategory = props.categories.map( el => {
+    const categoryCount = props.categories.length - 1;
+    const postCategory = props.categories.map( ( el, index ) => {
         return(
             // [0] category's name, [1] category's slug
             <Category
                 key={el[1]}
+                categoryIndeks={index}
+                categorySum={ categoryCount }
                 categoryName={el[0]}
                 categorySlug={el[1]}
             />

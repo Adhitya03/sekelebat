@@ -8,22 +8,28 @@ import Tag from '../tag';
 
 const contentSingle = ( props ) =>{
 
-    const postCategory = props.categories.map( el => {
+    const categoryCount = props.categories.length - 1;
+    const postCategory = props.categories.map( ( el, index ) => {
         return(
             // [0] category's name, [1] category's slug
             <Category
                 key={el[1]}
+                categoryIndeks={index}
+                categorySum={ categoryCount }
                 categoryName={el[0]}
                 categorySlug={el[1]}
             />
         );
     } );
 
-    const postTag = props.tag.map( el => {
+    const categoryTag = props.tag.length - 1;
+    const postTag = props.tag.map( ( el, index ) => {
         return(
             // [0] tag's name, [1] tag's slug
             <Tag
                 key={el[1]}
+                tagIndeks={index}
+                tagSum={ categoryTag }
                 tagName={el[0]}
                 tagSlug={el[1]}
             />
