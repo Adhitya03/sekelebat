@@ -249,6 +249,21 @@ img{
     color: #fff;
 }
 
+#sidebar #search .form-control:focus, #sidebar #search .form-control:focus + div button{
+    border-color: #3f57c4;
+    box-shadow: none;
+}
+
+#sidebar #search button {
+    background: #f7f7f7 none repeat scroll 0 0;
+    border: 1px solid #ced4da;
+}
+
+#sidebar #search button:hover, #sidebar #search .form-control:focus + div button {
+    background: #233588 none repeat scroll 0 0;
+    color: #ddd;
+}
+
 /* ==========================================================================
    Pagination
    ========================================================================== */

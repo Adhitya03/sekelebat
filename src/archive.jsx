@@ -123,7 +123,7 @@ class Archive extends Component{
             const type = currentType === 'category' ? 'category' : 'tag';
             const typeToRequestWpRest = currentType === 'category' ? 'categories' : 'tags';
             const slugToRequest = window.location.href.split( SekelebatSettings.domain + type + '/' )[1];
-            const taxnonomySlug = window.location.href.split( SekelebatSettings.domain )[1].split( '/' )[1];
+            const taxonomySlug = window.location.href.split( SekelebatSettings.domain )[1].split( '/' )[1];
             const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + slugToRequest;
             let currentPage = 1;
 
@@ -147,8 +147,8 @@ class Archive extends Component{
                                 throw Error(webResponse.statusText);
                             }
                             return webResponse.json();
-                        } ).then( taxResult => { /*taxResult : Taxonomi Result*/
-                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: type, slug: taxnonomySlug, url: window.location.href, loadedPost: true});
+                        } ).then( taxResult => { /*taxResult : Taxonomy Result*/
+                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: type, slug: taxonomySlug, url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});
