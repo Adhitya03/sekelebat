@@ -25,7 +25,7 @@ const content = ( props ) => {
     } );
 
     return(
-       <article id="blog-post">
+       <article>
            <div className="featured-image">
                {postFeaturedImage}
            </div>

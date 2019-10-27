@@ -94,7 +94,7 @@ class Index extends Component{
                 <Helmet>
                     <title>{webInfoTitle}</title>
                 </Helmet>
-                <div id="posts" className="col-12 col-md-9">
+                <div id="blog-post" className="col-12 col-md-9">
                     {content}
                     {pagination}
                 </div>

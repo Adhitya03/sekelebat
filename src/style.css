@@ -68,20 +68,20 @@ img{
 /* ==========================================================================
    Blog Post Area
    ========================================================================== */
-#content #blog-post {
+#blog-post article {
     box-sizing: border-box;
     border: 2px solid #f4f4f4;
     padding: 20px;
     margin-bottom: 40px;
 }
 
-.featured-image img {
+#blog-post article .featured-image img {
     width: 100%;
     box-shadow: 0 3px 12px -1px rgba(7,10,25,.2),0 22px 27px -20px rgba(7,10,25,.2);
     transition: all .3s ease;
 }
 
-.featured-image:hover img {
+#blog-post article .featured-image:hover img {
     opacity: 1;
     box-shadow: 0 15px 45px -5px rgba(7,10,25,.25);
     -webkit-filter: brightness(1.07);
@@ -89,7 +89,7 @@ img{
     transform: translate(0,-2px);
 }
 
-#content #blog-post .title h2 {
+#blog-post article .title h2 {
     color: #222;
     font-size: 24px;
     font-weight: 700;
@@ -98,37 +98,37 @@ img{
     transition: all 500ms ease;
 }
 
-#content #blog-post .footer-meta {
+#blog-post article .footer-meta {
     border-top: 2px solid #f4f4f4;
     padding-top: 20px;
     text-transform: lowercase;
 }
 
-#content #blog-post .footer-meta div,
-#content #blog-post .footer-meta a {
+#blog-post article .footer-meta div,
+#blog-post article .footer-meta a {
     font-size: 14px;
     font-weight: 300;
     font-style: italic;
 }
 
-#content #blog-post .footer-meta div,
-#content #blog-post .footer-meta div i,
-#content #blog-post .footer-meta div a{
+#blog-post article .footer-meta div,
+#blog-post article .footer-meta div i,
+#blog-post article .footer-meta div a{
     color: #555;
 }
 
-#content #blog-post .footer-meta div:hover,
-#content #blog-post .footer-meta div:hover i,
-#content #blog-post .footer-meta div a:hover,
-#content #blog-post .title h2:hover{
+#blog-post article .footer-meta div:hover,
+#blog-post article .footer-meta div:hover i,
+#blog-post article .footer-meta div a:hover,
+#blog-post article .title h2:hover{
     color: #3f57c4;
 }
 
-#content #blog-post .footer-meta i {
+#blog-post article .footer-meta i {
     margin-right: 5px;
 }
 
-#content #blog-post .footer-meta div {
+#blog-post article .footer-meta div {
     display: inline;
     margin-right: 20px;
 }
