@@ -120,14 +120,15 @@ class Archive extends Component{
                 });
         }else{
             let postList = '';
-            console.log(currentType);
             const type = currentType === 'category' ? 'category' : 'tag';
-            const typeUrl = currentType === 'category' ? 'categories' : 'tags';
-            const slug = window.location.href.split( SekelebatSettings.domain + type + '/' )[1];
-            const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + slug;
+            const typeToRequestWpRest = currentType === 'category' ? 'categories' : 'tags';
+            const slugToRequest = window.location.href.split( SekelebatSettings.domain + type + '/' )[1];
+            const taxnonomySlug = window.location.href.split( SekelebatSettings.domain )[1].split( '/' )[1];
+            const url = SekelebatSettings.domain +  "wp-json/sekelebat/v1/"+ type + "/" + slugToRequest;
             let currentPage = 1;
-            if( slug.includes( '/page/' ) ){
-                currentPage = slug.split('/page/')[1].replace( '/', '' );
+
+            if( slugToRequest.includes( '/page/' ) ){
+                currentPage = slugToRequest.split('/page/')[1].replace( '/', '' );
             }
 
             fetch( url )
@@ -140,14 +141,14 @@ class Archive extends Component{
                 .then( result => {
                     postList = result[1];
                     if( result[0] !== 0 ){
-                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ typeUrl + "/" + result[0];
+                        let taxUrl = SekelebatSettings.domain +  "wp-json/wp/v2/"+ typeToRequestWpRest + "/" + result[0];
                         fetch( taxUrl ).then( webResponse => {
                             if ( !webResponse.ok ) {
                                 throw Error(webResponse.statusText);
                             }
                             return webResponse.json();
                         } ).then( taxResult => { /*taxResult : Taxonomi Result*/
-                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: currentType, slug: slug.replace( '/', '' ), url: window.location.href, loadedPost: true});
+                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: type, slug: taxnonomySlug, url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});
