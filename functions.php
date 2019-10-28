@@ -168,7 +168,12 @@ function get_sekelebat_get_image_src( $object, $field_name, $request ) {
 	if($object[ 'featured_media' ] == 0) {
 		return $object[ 'featured_media' ];
 	}
-	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
+	if( is_archive() ){
+		$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
+	}else{
+		$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
+	}
+
 	return $feat_img_array[0];
 }
 

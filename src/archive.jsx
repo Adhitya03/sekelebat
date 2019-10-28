@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Helmet} from "react-helmet/es/Helmet";
 
-import Content from './component/content/content';
+import Content from './component/content/content-archive';
 import Aux from "./hoc/Auxiliary";
 import Pagination from "./component/paginations";
 import NotFound from "./component/404";
@@ -193,8 +193,10 @@ class Archive extends Component{
                 <Helmet>
                     <title>{taxTitle}</title>
                 </Helmet>
-                <div id="posts" className="col-12 col-md-9">
-                    {content}
+                <div id="blog-post" className="col-12 col-md-9">
+                    <div className="row">
+                        {content}
+                    </div>
                     {pagination}
                 </div>
             </Aux>
