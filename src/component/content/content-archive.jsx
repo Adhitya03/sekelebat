@@ -25,20 +25,22 @@ const contentArchive = ( props ) => {
     } );
 
     return(
-        <article className="col-md-6 col-12">
-            <div className="featured-image">
-                {postFeaturedImage}
-            </div>
-            <div className="title">
-                <Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}><h2>{props.title}</h2></Link>
-            </div>
-            <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>
-            <div className="footer-meta">
-                <div className="author"><i className="fas fa-user"></i><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
-                <div className="date"><i className="fas fa-calendar-alt"></i>{props.date}</div>
-                <div className="category"><i className="fas fa-tags"></i>{postCategory}</div>
-            </div>
-        </article>
+        <div className="col-md-6 col-12">
+            <article >
+                <div className="featured-image">
+                    {postFeaturedImage}
+                </div>
+                <div className="title">
+                    <Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}><h2>{props.title}</h2></Link>
+                </div>
+                <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>
+                <div className="footer-meta">
+                    <div className="author"><i className="fas fa-user"></i><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
+                    <div className="date"><i className="fas fa-calendar-alt"></i>{props.date}</div>
+                    <div className="category"><i className="fas fa-tags"></i>{postCategory}</div>
+                </div>
+            </article>
+        </div>
     );
 };
 
