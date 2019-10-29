@@ -4,6 +4,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 import Content from './component/content/content';
 import Aux from './hoc/Auxiliary';
 import Pagination from './component/paginations';
+import Loading from './component/loading';
 
 class Index extends Component{
 
@@ -88,7 +89,7 @@ class Index extends Component{
             pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
             window.scrollTo(0, 0);
         }
-
+        content = <Loading/>;
         return (
             <Aux>
                 <Helmet>
