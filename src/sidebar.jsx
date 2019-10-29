@@ -38,7 +38,7 @@ class Sidebar extends Component {
         const options = {
             replace: ({ name, attribs, children }) => {
                 if( name === "a" ) {
-                    if( attribs.href.includes( SekelebatSettings.domain ) ){
+                    if( attribs.href !== undefined && attribs.href.includes( SekelebatSettings.domain ) ){
                         return(
                                 <Link to={ SekelebatSettings.path + attribs.href.split( SekelebatSettings.domain )[1] } className={attribs.class} title={attribs.title}>
                                     {domToReact(children)}
