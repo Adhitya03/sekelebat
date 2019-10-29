@@ -6,6 +6,7 @@ import ContentPage from './component/content/content-page';
 import Aux from './hoc/Auxiliary';
 import PostMeta from './component/wp-head/post-meta';
 import Pagemeta from './component/wp-head/page-meta';
+import Loading from "./component/loading";
 
 class Single extends Component {
 
@@ -46,7 +47,7 @@ class Single extends Component {
     }
 
     render() {
-        let content = <div className="loading">Loading  gan</div>;
+        let content = <Loading/>;
         let meta = '';
         let metas = '';
         let notFound = '';

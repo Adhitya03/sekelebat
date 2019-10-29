@@ -5,6 +5,7 @@ import Content from './component/content/content-archive';
 import Aux from "./hoc/Auxiliary";
 import Pagination from "./component/paginations";
 import NotFound from "./component/404";
+import Loading from "./component/loading";
 
 class Archive extends Component{
 
@@ -158,7 +159,7 @@ class Archive extends Component{
     }
 
     render() {
-        let content = <div className="loading">Loading  gan</div>;
+        let content = <Loading/>;
         let taxTitle = '';
         let pagination = '';
         if( this.state.loadedPost ){
@@ -187,7 +188,6 @@ class Archive extends Component{
             }
             window.scrollTo(0, 0);
         }
-
         return (
             <Aux>
                 <Helmet>

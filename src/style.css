@@ -12,13 +12,19 @@ body{
     color: #555;
 }
 
-#loading{
+#loading {
+    position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba( 255, 255, 255, 0.1 );
-    position: fixed;
+    background: rgba( 255, 255, 255, 0.3 );
     top: 0;
     left: 0;
+    z-index: 99;
+}
+
+#loading img {
+    margin: 45vh auto auto;
+    display: block;
 }
 
 h1,

@@ -58,14 +58,13 @@ class Index extends Component{
                 return response.json();
             } )
             .then( result => {
-                console.log(currentpage);
                 this.setState({posts: result, url: window.location.href, totalPages: totalPages, currentpage: currentpage, loadedPost: true});
         } )
     }
 
     render() {
 
-        let content = <div className="loading">Loading  gan</div>;
+        let content = <Loading/>;
         let webInfoTitle = '';
         let pagination = '';
         if( this.state.loadedPost ) {
@@ -89,7 +88,7 @@ class Index extends Component{
             pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
             window.scrollTo(0, 0);
         }
-        content = <Loading/>;
+
         return (
             <Aux>
                 <Helmet>
