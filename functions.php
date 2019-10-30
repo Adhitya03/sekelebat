@@ -94,6 +94,7 @@ function sekelebat_config(){
 	add_theme_support( 'align-wide' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'align-wide' );
+	add_image_size( 'featuredImage', 781, 400, true);
 
 }
 add_action( 'after_setup_theme', 'sekelebat_config', 0 );
@@ -168,11 +169,7 @@ function get_sekelebat_get_image_src( $object, $field_name, $request ) {
 	if($object[ 'featured_media' ] == 0) {
 		return $object[ 'featured_media' ];
 	}
-	if( is_archive() ){
-		$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
-	}else{
-		$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'medium', true );
-	}
+	$feat_img_array = wp_get_attachment_image_src( $object[ 'featured_media' ], 'featuredImage', true );
 
 	return $feat_img_array[0];
 }

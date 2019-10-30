@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Helmet} from "react-helmet/es/Helmet";
 
-import ContentSearch from "./component/content/content-search";
+import Content from './component/content/content-archive';
 import Aux from "./hoc/Auxiliary";
 import Pagination from "./component/paginations";
 import NotFound from "./component/404";
@@ -16,6 +16,7 @@ class Search extends Component {
             siteName: '',
             url: null,
             totalPages: null,
+            currentPage: null,
             type: '',
             slug: '',
             loadedPost: false
@@ -37,19 +38,18 @@ class Search extends Component {
     fetchPosts(){
         const pageUrl = window.location.href;
         let getQuery = pageUrl.split( SekelebatSettings.domain + 'search?s=' )[1];
-        let currentNumb = null;
+        let currentPage = 1;
         let searchQuery = '';
         let pagesNumb;
         if( pageUrl.includes('/page/') ){
             const get_searchUrl_url = pageUrl.split('/page/');
-            currentNumb = get_searchUrl_url[1].split('/')[0];
+            currentPage = get_searchUrl_url[1].split('/')[0];
             getQuery = get_searchUrl_url[0].split( SekelebatSettings.domain + 'search?s=' )[1];
-            searchQuery = getQuery + '&page=' + currentNumb;
-            console.log(searchQuery);
+            searchQuery = getQuery + '&page=' + currentPage;
         }else{
             searchQuery = getQuery;
         }
-        const url = SekelebatSettings.domain + "wp-json/wp/v2/search?search=" + searchQuery;
+        const url = SekelebatSettings.domain + "wp-json/wp/v2/posts?search=" + searchQuery;
         fetch( url )
             .then( response => {
                 if(!response.ok){
@@ -64,7 +64,7 @@ class Search extends Component {
                 return response.json();
             } )
             .then( result => {
-                this.setState({posts: result, pageName: "Search : " + getQuery.replace( '+', ' ' ), siteName: SekelebatSettings.title, totalPages: pagesNumb, type: "search", slug: getQuery, url: window.location.href, loadedPost: true});
+                this.setState({posts: result, pageName: "Search : " + getQuery.replace( '+', ' ' ), siteName: SekelebatSettings.title, totalPages: pagesNumb, currentPage: currentPage, type: "search", slug: getQuery, url: window.location.href, loadedPost: true});
             });
     }
 
@@ -75,20 +75,27 @@ class Search extends Component {
         let pagination = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
-                content = <NotFound />;
-                taxTitle = "Not Found - " + SekelebatSettings.title;
+                content = <div>Sorry, no posts matched your criteria.</div>;
+                taxTitle = this.state.pageName + ' - ' + this.state.siteName;
             }else{
                 content = this.state.posts.map( el => {
                     return (
-                        <ContentSearch
+                        <Content
                             key={el.id}
-                            title={el.title}
-                            link={el.url}
+                            title={el.title['rendered']}
+                            categories={el.sekelebat_post_categories}
+                            tag={el.sekelebat_post_tags}
+                            excerpt={el.excerpt['rendered']}
+                            featuredImage={el.sekelebat_featured_image}
+                            author={el.sekelebat_author_name}
+                            authorID={el.author}
+                            date={el.sekelebat_published_date}
+                            link={el.link}
                         />
                     );
                 } );
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
-                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages}/>;
+                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentPage={this.state.currentPage}/>;
             }
             window.scrollTo(0, 0);
         }
@@ -98,8 +105,10 @@ class Search extends Component {
                 <Helmet>
                     <title>{taxTitle}</title>
                 </Helmet>
-                <div id="posts" className="col-12 col-md-9">
-                    {content}
+                <div id="blog-post" className="col-12 col-md-9">
+                    <div className="row">
+                        {content}
+                    </div>
                     {pagination}
                 </div>
             </Aux>

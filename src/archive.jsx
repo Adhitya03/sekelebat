@@ -99,13 +99,13 @@ class Archive extends Component{
                     this.setState({posts: result, pageName: archiveName, siteName: SekelebatSettings.title, totalPages: totalPages, currentPage: currentpage, type: "archives", slug: currentSlug, url: window.location.href, loadedPost: true});
                 });
         }else if(currentType === "author"){
-            let currentpage = 1;
+            let currentPage = 1;
             const getSlug = pageUrl.split( SekelebatSettings.domain )[1];
             const currentSlug = getSlug.split( 'author/' );
             let authorID = currentSlug[1].replace( '/', '' );
             if( currentSlug[1].includes( '/page/' ) ){
                 authorID = currentSlug[1].split( '/page/' )[0];
-                currentpage = currentSlug[1].split( '/page/' )[1].replace( '/', '');
+                currentPage = currentSlug[1].split( '/page/' )[1].replace( '/', '');
             }
             const url = SekelebatSettings.domain + "wp-json/sekelebat/v1/" + getSlug;
             fetch( url )
@@ -117,7 +117,7 @@ class Archive extends Component{
                 } )
                 .then( result => {
                     const postList = result[1];
-                    this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], currentPage: currentpage, type: "author", slug: authorID, url: window.location.href, loadedPost: true});
+                    this.setState({posts: postList, pageName: "Author Archive : " + result[0], siteName: result[2], totalPages: result[3]["X-WP-TotalPages"], currentPage: currentPage, type: "author", slug: authorID, url: window.location.href, loadedPost: true});
                 });
         }else{
             let postList = '';
@@ -184,7 +184,7 @@ class Archive extends Component{
                     );
                 } );
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
-                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentpage={this.state.currentPage}/>;
+                pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentPage={this.state.currentPage}/>;
             }
             window.scrollTo(0, 0);
         }

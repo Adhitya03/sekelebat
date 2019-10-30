@@ -14,7 +14,7 @@ const pagination = ( props ) => {
     }
 
     for ( let i = 1; i <= props.pagination; i++ ){
-        if( i == props.currentpage ){
+        if( i == props.currentPage ){
             pagesNumb.push(<li><span> {i} </span></li>);
         }else{
             if( i === 1 ){

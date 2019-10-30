@@ -88,7 +88,7 @@ class Index extends Component{
                     );
                 } );
                 webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
-                pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
+                pagination = <Pagination pagination={this.state.totalPages} currentPage={this.state.currentpage}/>;
                 window.scrollTo(0, 0);
             }
         }
