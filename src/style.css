@@ -60,6 +60,10 @@ img{
     font-size: 42px;
 }
 
+#masthead nav .row {
+    width: 100%;
+}
+
 #navbarNav {
     border-top: 2px solid #222;
     border-bottom: 1px solid #222;
@@ -106,10 +110,10 @@ img{
 
 #blog-post article .title h2 {
     color: #222;
-    font-size: 24px;
+    font-size: 28px;
+    line-height: 28px;
     font-weight: 700;
     margin: 20px 0;
-    line-height: 24px;
     transition: all 500ms ease;
 }
 
@@ -166,10 +170,10 @@ img{
 
 #content #single-post .entry-header .title h2 {
     color: #222;
-    font-size: 24px;
+    font-size: 32px;
+    line-height: 32px;
     font-weight: 700;
     margin: 20px 0;
-    line-height: 24px;
     transition: all 500ms ease;
 }
 

@@ -68,25 +68,29 @@ class Index extends Component{
         let webInfoTitle = '';
         let pagination = '';
         if( this.state.loadedPost ) {
-            content = this.state.posts.map( el => {
-                return (
-                    <Content
-                        key={el.id}
-                        title={el.title['rendered']}
-                        categories={el.sekelebat_post_categories}
-                        tag={el.sekelebat_post_tags}
-                        excerpt={el.excerpt['rendered']}
-                        featuredImage={el.sekelebat_featured_image}
-                        author={el.sekelebat_author_name}
-                        authorID={el.author}
-                        date={el.sekelebat_published_date}
-                        link={el.link}
-                    />
-                );
-            } );
-            webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
-            pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
-            window.scrollTo(0, 0);
+            if( this.state.posts.length === 0 ){
+                content = <div>Sorry, no posts matched your criteria.</div>;
+            }else{
+                content = this.state.posts.map( el => {
+                    return (
+                        <Content
+                            key={el.id}
+                            title={el.title['rendered']}
+                            categories={el.sekelebat_post_categories}
+                            tag={el.sekelebat_post_tags}
+                            excerpt={el.excerpt['rendered']}
+                            featuredImage={el.sekelebat_featured_image}
+                            author={el.sekelebat_author_name}
+                            authorID={el.author}
+                            date={el.sekelebat_published_date}
+                            link={el.link}
+                        />
+                    );
+                } );
+                webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
+                pagination = <Pagination pagination={this.state.totalPages} currentpage={this.state.currentpage}/>;
+                window.scrollTo(0, 0);
+            }
         }
 
         return (
