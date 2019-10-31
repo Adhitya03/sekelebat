@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
+import imgNotFound from "./../../images/img-not-found.png";
 import Category from './../category';
 
 const contentArchive = ( props ) => {
@@ -8,6 +9,8 @@ const contentArchive = ( props ) => {
     let postFeaturedImage = null;
     if( props.featuredImage !== 0 ){
         postFeaturedImage = <img src={props.featuredImage} alt={props.title}/>;
+    }else{
+        postFeaturedImage = <img src={imgNotFound} alt="Image not available"/>;
     }
 
     const categoryCount = props.categories.length - 1;

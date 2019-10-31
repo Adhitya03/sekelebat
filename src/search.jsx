@@ -4,7 +4,6 @@ import {Helmet} from "react-helmet/es/Helmet";
 import Content from './component/content/content-archive';
 import Aux from "./hoc/Auxiliary";
 import Pagination from "./component/paginations";
-import NotFound from "./component/404";
 
 class Search extends Component {
 

@@ -24,8 +24,8 @@ const contentPage = ( props ) =>{
         }
     };
 
+    console.log(props.content);
     const content = parse(props.content, options);
-
     return(
         <Aux>
             <div className="featured-image">{postFeaturedImage}</div>
