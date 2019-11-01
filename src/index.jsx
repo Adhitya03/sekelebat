@@ -64,8 +64,8 @@ class Index extends Component{
 
     render() {
 
+        const siteTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
         let content = <Loading/>;
-        let webInfoTitle = '';
         let pagination = '';
         if( this.state.loadedPost ) {
             if( this.state.posts.length === 0 ){
@@ -87,7 +87,6 @@ class Index extends Component{
                         />
                     );
                 } );
-                webInfoTitle = SekelebatSettings.title + ' - ' + SekelebatSettings.description;
                 pagination = <Pagination pagination={this.state.totalPages} currentPage={this.state.currentpage}/>;
                 window.scrollTo(0, 0);
             }
@@ -96,7 +95,7 @@ class Index extends Component{
         return (
             <Aux>
                 <Helmet>
-                    <title>{webInfoTitle}</title>
+                    <title>{siteTitle}</title>
                 </Helmet>
                 <div id="blog-post" className="col-12 col-md-9">
                     {content}

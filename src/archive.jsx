@@ -160,12 +160,12 @@ class Archive extends Component{
 
     render() {
         let content = <Loading/>;
-        let taxTitle = '';
+        let taxTitle = ''; // Taxonomi Title
         let pagination = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
                 content = <NotFound />;
-                taxTitle = "Not Found - " + SekelebatSettings.title;
+                taxTitle = "Page Not Found - " + SekelebatSettings.title;
             }else{
                 content = this.state.posts.map( el => {
                     return (

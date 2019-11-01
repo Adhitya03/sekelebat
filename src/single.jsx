@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 
 import ContentSingle from './component/content/content-single';
 import ContentPage from './component/content/content-page';
@@ -7,6 +6,8 @@ import Aux from './hoc/Auxiliary';
 import PostMeta from './component/wp-head/post-meta';
 import Pagemeta from './component/wp-head/page-meta';
 import Loading from "./component/loading";
+import notFound from "./component/404";
+
 
 class Single extends Component {
 
@@ -50,7 +51,6 @@ class Single extends Component {
         let content = <Loading/>;
         let meta = '';
         let metas = '';
-        let notFound = '';
         if( this.state.loadedPost ){
             if( this.state.post.type === 'post' ){
                 let post_title = '';
@@ -99,14 +99,14 @@ class Single extends Component {
                     date={this.state.post.sekelebat_published_date}
                 />;
             }else if( this.state.post.data['status'] === 404 ){
-                notFound = <Redirect to={SekelebatSettings.path + '404'}/>;
+                content = <notFound/>;
+                meta = <PostMeta metaData="404" />;
             }
             window.scrollTo(0, 0);
         }
 
         return (
             <Aux>
-                {notFound}
                 {meta}
                 <article id="single-post" className="col-12 col-md-9">
                     {content}

@@ -30,7 +30,7 @@ const contentPage = ( props ) =>{
         <Aux>
             <div className="featured-image">{postFeaturedImage}</div>
             <div className="title">
-                <h1>{props.title}</h1>
+                <h2>{props.title}</h2>
             </div>
             <div className="content">{content}</div>
             <div className="author">{props.author}</div>
