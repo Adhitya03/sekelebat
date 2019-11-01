@@ -7,6 +7,7 @@ import PostMeta from "./component/wp-head/post-meta";
 import Pagemeta from "./component/wp-head/page-meta";
 import Loading from "./component/loading";
 import NotFound from "./component/404";
+import Comment from "./component/comments";
 
 class Single extends Component {
 
@@ -50,6 +51,7 @@ class Single extends Component {
         let content = <Loading/>;
         let meta = '';
         let metas = '';
+        let comment = '';
         if( this.state.loadedPost ){
             if( this.state.post.type === 'post' ){
                 let post_title = '';
@@ -75,6 +77,7 @@ class Single extends Component {
                     date={this.state.post.sekelebat_published_date}
                     authorID={this.state.post.author}
                 />;
+                comment = <Comment url={this.state.url}/>
             }else if(this.state.post.type === 'page'){
                 let page_title = '';
                 if(this.state.post.yoast_meta.length < 3){
@@ -109,6 +112,7 @@ class Single extends Component {
                 {meta}
                 <article id="single-post" className="col-12 col-md-9">
                     {content}
+                    {comment}
                 </article>
             </Aux>
         );
