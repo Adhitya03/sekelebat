@@ -10,7 +10,6 @@ import Index from './index';
 import Archive from './archive';
 import Search from './search';
 import Sidebar from './sidebar';
-import NotFound from './component/404';
 
 import './style.css';
 
@@ -34,7 +33,6 @@ const App = () => (
                     <Route exact path={SekelebatSettings.path + '(category|tag)/:slug/page/:slug'} component={Archive} />{/*Category and Tags page pagination*/}
                     <Route exact path={SekelebatSettings.path + 'search:filter?'} component={Search} />
                     <Route exact path={SekelebatSettings.path + 'search:filter?/page/:slug'} component={Search} />{/*Search page pagination*/}
-                    <Route exact path={SekelebatSettings.path + '404'} component={NotFound} />
                     <Route path={SekelebatSettings.path + ':slug'} component={Single} />
                 </Switch>
                 <Sidebar/>

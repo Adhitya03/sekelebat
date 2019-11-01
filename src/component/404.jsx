@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
 import Aux from "./../hoc/Auxiliary"
+import { Link } from "react-router-dom";
 
 const notFound = () => {
     console.log("404");
     return(
         <Aux>
-            <div id="not-found" className="col-12 col-md-8">
+            <div id="not-found">
                 <svg width="380px" height="500px" viewBox="0 0 837 1045">
                     <g id="Page-1" stroke="none" fill="none">
                         <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#007FB2"/>
@@ -20,8 +21,7 @@ const notFound = () => {
                     <p>Page not found</p>
                     <div className="buttons-con">
                         <div className="action-link-wrap">
-                            <a onClick="history.back(-1)" className="link-button link-back-button">Go Back</a>
-                            <a href="" className="link-button">Go to Home Page</a>
+                            <Link to={SekelebatSettings.path} className="link-button">Go to Home Page</Link>
                         </div>
                     </div>
                 </div>

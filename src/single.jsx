@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import ContentSingle from './component/content/content-single';
-import ContentPage from './component/content/content-page';
-import Aux from './hoc/Auxiliary';
-import PostMeta from './component/wp-head/post-meta';
-import Pagemeta from './component/wp-head/page-meta';
+import ContentSingle from "./component/content/content-single";
+import ContentPage from "./component/content/content-page";
+import Aux from "./hoc/Auxiliary";
+import PostMeta from "./component/wp-head/post-meta";
+import Pagemeta from "./component/wp-head/page-meta";
 import Loading from "./component/loading";
-import notFound from "./component/404";
-
+import NotFound from "./component/404";
 
 class Single extends Component {
 
@@ -99,7 +98,7 @@ class Single extends Component {
                     date={this.state.post.sekelebat_published_date}
                 />;
             }else if( this.state.post.data['status'] === 404 ){
-                content = <notFound/>;
+                content = <NotFound/>;
                 meta = <PostMeta metaData="404" />;
             }
             window.scrollTo(0, 0);
