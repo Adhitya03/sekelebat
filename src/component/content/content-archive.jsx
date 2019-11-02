@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import parse from "html-react-parser";
 
 import imgNotFound from "./../../images/img-not-found.png";
 import Category from './../category';
@@ -36,7 +37,7 @@ const contentArchive = ( props ) => {
                 <div className="title">
                     <Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}><h2>{props.title}</h2></Link>
                 </div>
-                <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>
+                <div className="content">{ parse( props.excerpt ) }</div>
                 <div className="footer-meta">
                     <div className="author"><i className="fas fa-user"></i><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
                     <div className="date"><i className="fas fa-calendar-alt"></i>{props.date}</div>
