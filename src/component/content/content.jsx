@@ -27,6 +27,11 @@ const content = ( props ) => {
         );
     } );
 
+    let readMore = '';
+    if( props.title === '' ){
+        readMore = <div className="read-more"><i className="fab fa-readme"/><Link to={SekelebatSettings.path + props.link.split(SekelebatSettings.domain)[1]}> Read More... </Link></div>
+    }
+
     return(
        <article>
            <div className="featured-image">
@@ -37,9 +42,10 @@ const content = ( props ) => {
            </div>
            <div className="content" dangerouslySetInnerHTML={{__html: props.excerpt}}></div>
            <div className="footer-meta">
-               <div className="author"><i className="fas fa-user"></i><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
-               <div className="date"><i className="fas fa-calendar-alt"></i>{props.date}</div>
-               <div className="category"><i className="fas fa-tags"></i>{postCategory}</div>
+               <div className="author"><i className="fas fa-user"/><Link to={SekelebatSettings.path + 'author/' + props.authorID + '/'}>{props.author}</Link></div>
+               <div className="date"><i className="fas fa-calendar-alt"/>{props.date}</div>
+               <div className="category"><i className="fas fa-tags"/>{postCategory}</div>
+               {readMore}
            </div>
        </article>
     );
