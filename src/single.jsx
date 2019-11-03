@@ -7,7 +7,7 @@ import PostMeta from "./component/wp-head/post-meta";
 import Pagemeta from "./component/wp-head/page-meta";
 import Loading from "./component/loading";
 import NotFound from "./component/404";
-import Comment from "./component/comments";
+import Comment from "./comments";
 
 class Single extends Component {
 
