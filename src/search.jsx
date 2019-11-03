@@ -72,6 +72,7 @@ class Search extends Component {
         let content = '';
         let taxTitle = '';
         let pagination = '';
+        let archiveTitle = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
                 content = <div>Sorry, no posts matched your criteria.</div>;
@@ -95,6 +96,7 @@ class Search extends Component {
                 } );
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
                 pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentPage={this.state.currentPage}/>;
+                archiveTitle = this.state.pageName;
             }
             window.scrollTo(0, 0);
         }
@@ -105,6 +107,9 @@ class Search extends Component {
                     <title>{taxTitle}</title>
                 </Helmet>
                 <div id="blog-post" className="col-12 col-md-9">
+                    <div className="archive-info">
+                        <h3>{archiveTitle}</h3>
+                    </div>
                     <div className="row">
                         {content}
                     </div>

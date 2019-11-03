@@ -14,6 +14,7 @@ class Archive extends Component{
         this.state = {
             posts: [],
             pageName: '',
+            desc: '',
             siteName: '',
             url: null,
             totalPages: null,
@@ -149,7 +150,7 @@ class Archive extends Component{
                             }
                             return webResponse.json();
                         } ).then( taxResult => { /*taxResult : Taxonomy Result*/
-                            this.setState({posts: postList, pageName: taxResult['name'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: type, slug: taxonomySlug, url: window.location.href, loadedPost: true});
+                            this.setState({posts: postList, pageName: taxResult['name'], desc: taxResult['description'], siteName: SekelebatSettings.title, totalPages: result[2]["X-WP-TotalPages"], currentPage: currentPage, type: type, slug: taxonomySlug, url: window.location.href, loadedPost: true});
                         } )
                     }else{
                         this.setState({posts: postList, url: window.location.href, loadedPost: true});
@@ -162,6 +163,8 @@ class Archive extends Component{
         let content = <Loading/>;
         let taxTitle = ''; // Taxonomi Title
         let pagination = '';
+        let archiveTitle = '';
+        let archiveDesc = '';
         if( this.state.loadedPost ){
             if( this.state.posts.length === 0 ){
                 content = <NotFound />;
@@ -185,6 +188,12 @@ class Archive extends Component{
                 } );
                 taxTitle = this.state.pageName + ' - ' + this.state.siteName;
                 pagination = <Pagination type={this.state.type} slug={this.state.slug} pagination={this.state.totalPages} currentPage={this.state.currentPage}/>;
+                if( this.state.type === 'category' || this.state.type === 'tag' ){
+                    archiveTitle = this.state.type + ' : ' + this.state.pageName;
+                } else {
+                    archiveTitle = this.state.pageName;
+                }
+                archiveDesc = this.state.desc;
             }
             window.scrollTo(0, 0);
         }
@@ -194,6 +203,10 @@ class Archive extends Component{
                     <title>{taxTitle}</title>
                 </Helmet>
                 <div id="blog-post" className="col-12 col-md-9">
+                    <div className="archive-info">
+                        <h3>{archiveTitle}</h3>
+                        <div className="archive-desc">{archiveDesc}</div>
+                    </div>
                     <div className="row">
                         {content}
                     </div>
