@@ -1,7 +1,11 @@
 <?php
 
-//Initialize the update checker.
-require 'theme-update-checker.php';
+// requiring  file
+require get_template_directory() . '/assets/required-plugin.php';
+require get_template_directory() . '/assets/theme-update-checker.php';
+require get_template_directory() . '/assets/remove_meta_data_from_wp_head.php';
+
+
 $example_update_checker = new ThemeUpdateChecker(
 	'sekelebat',
 	'https://adhityar.com/themedir/sekelebat.json'
@@ -17,37 +21,7 @@ function rewritePostTypeArchive() {
 	return $wp_rewrite->date_structure = 'archives/%year%/%monthnum%/%day%';
 }
 
-// Remove Yoast Meta SEO will call using react-helmet
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-if (is_plugin_active('wordpress-seo/wp-seo.php')) {
-	function sekelebat_remove_yoast_meta($filter){
-		return false;
-	}
 
-	add_filter( 'wpseo_title', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_robots', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_canonical', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_locale', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_title', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_desc', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_url', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_type', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_image', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_image_size', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_site_name', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_author_facebook', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_opengraph_show_publish_date', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_card_type', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_title', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_description', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_site', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_image', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_twitter_creator_account', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_json_ld_output', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_next_rel_link', 'sekelebat_remove_yoast_meta');
-	add_filter( 'wpseo_prev_rel_link', 'sekelebat_remove_yoast_meta');
-}
 
 function sekelebat_load_scripts() {
 	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', '', '4.3.1', 'all');
