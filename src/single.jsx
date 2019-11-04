@@ -55,17 +55,23 @@ class Single extends Component {
         if( this.state.loadedPost ){
             if( this.state.post.type === 'post' ){
                 let post_title = '';
-                if(this.state.post.yoast_meta.length < 3){
-                    post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
-                }else{
-                    if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                if( this.state.post.yoast_meta !== undefined ){
+                    if(this.state.post.yoast_meta.length < 3){
                         post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                     }else{
-                        post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                        if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                            post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                        }else{
+                            post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                        }
                     }
+                    this.state.post.yoast_meta.push(post_title);
+                    metas = this.state.post.yoast_meta;
+                }else{
+                    post_title = {postTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    metas = [post_title];
                 }
-                this.state.post.yoast_meta.push(post_title);
-                metas = this.state.post.yoast_meta;
+
                 meta = <PostMeta metaData={metas} />;
                 content = <ContentSingle
                     title={this.state.post.title['rendered']}
@@ -80,17 +86,23 @@ class Single extends Component {
                 comment = <Comment url={this.state.url}/>
             }else if(this.state.post.type === 'page'){
                 let page_title = '';
-                if(this.state.post.yoast_meta.length < 3){
-                    page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
-                }else{
-                    if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                if( this.state.post.yoast_meta !== undefined ){
+                    if(this.state.post.yoast_meta.length < 3){
                         page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
                     }else{
-                        page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                        if( this.state.post.yoast_meta[3]['og:title'] === undefined ){
+                            page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                        }else{
+                            page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.yoast_meta[3]['og:title']};
+                        }
                     }
+                    this.state.post.yoast_meta.push(page_title);
+                    metas = this.state.post.yoast_meta;
+                }else{
+                    page_title = {pageTitle: this.state.post.title['rendered'] + ' - ' + this.state.post.sekelebat_webinfo};
+                    metas = [page_title];
                 }
-                this.state.post.yoast_meta.push(page_title);
-                metas = this.state.post.yoast_meta;
+
                 meta = <Pagemeta metaData={metas} />;
                 content = <ContentPage
                     title={this.state.post.title['rendered']}

@@ -24,7 +24,6 @@ const contentPage = ( props ) =>{
         }
     };
 
-    console.log(props.content);
     const content = parse(props.content, options);
     return(
         <Aux>

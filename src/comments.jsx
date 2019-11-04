@@ -11,6 +11,15 @@ class Comments extends Component{
         this.facebookJs();
     }
 
+    facebookJs(){
+        const fjs = document.getElementsByTagName("script")[0];
+        const js = document.createElement("script");
+        js.id = "facebook-jssdk";
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+        return fjs;
+    }
+
     render() {
         return(
             <Aux>
