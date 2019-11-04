@@ -1,5 +1,12 @@
 <?php
 
+//Initialize the update checker.
+require 'theme-update-checker.php';
+$example_update_checker = new ThemeUpdateChecker(
+	'sekelebat',
+	'https://adhityar.com/themedir/sekelebat.json'
+);
+
 // Remove title
 remove_action('wp_head', '_wp_render_title_tag', '1');
 
@@ -363,6 +370,5 @@ function sekelebat_register_fields() {
 
 }
 add_action( 'rest_api_init', 'sekelebat_register_fields' );
-
 
 ?>
