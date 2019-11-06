@@ -454,3 +454,45 @@ img{
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   Comments Area
+   ========================================================================== */
+#comments h3{
+    font-weight: 700;
+    margin: 40px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#comments li{
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#comments .comment-author .avatar {
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+}
+
+#comments .fn {
+    color: #222;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-left: 10px;
+    font-style: normal;
+}
+
+#comments .comment-meta {
+    color: #767676;
+    font-size: 0.8em;
+    margin-left: 70px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+#comments [id^="div-comment-"] {
+    margin-bottom: 20px;
+}
