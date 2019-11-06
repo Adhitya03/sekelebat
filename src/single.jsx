@@ -112,6 +112,7 @@ class Single extends Component {
                     authorSlug={this.state.post.sekelebat_get_author_slug}
                     date={this.state.post.sekelebat_published_date}
                 />;
+                comment = <Comment comments={this.state.post.sekelebat_comment_list}/>
             }else if( this.state.post.data['status'] === 404 ){
                 content = <NotFound/>;
                 meta = <PostMeta metaData="404" />;
