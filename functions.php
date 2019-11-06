@@ -3,7 +3,7 @@
 // requiring  file
 require get_template_directory() . '/assets/required-plugin.php';
 require get_template_directory() . '/assets/theme-update-checker.php';
-require get_template_directory() . '/assets/remove_meta_data_from_wp_head.php';
+//require get_template_directory() . '/assets/remove_meta_data_from_wp_head.php';
 
 
 $example_update_checker = new ThemeUpdateChecker(
@@ -138,12 +138,17 @@ add_filter( 'rest_post_collection_params', function( $query_params ) {
 	return $query_params;
 } );
 
-function get_sekelebat_webinfo() {
-	return get_bloginfo('name');
-}
-
 function get_sekelebat_get_author_name( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
+}
+
+function get_sekelebat_comment_list( $object, $field_name, $request ) {
+	$list = array(
+		'echo' => false,
+		'page' => $object['id']
+	);
+
+	return wp_list_comments( $list );
 }
 
 function get_sekelebat_get_image_src( $object, $field_name, $request ) {
@@ -262,11 +267,11 @@ function author_route_handler( $data ){
 // Add various fields to the JSON output
 function sekelebat_register_fields() {
 
-	// Add Author Name
+	// Add Comment_list
 	register_rest_field( array( 'post', 'page' ),
-		'sekelebat_webinfo',
+		'sekelebat_comment_list',
 		array(
-			'get_callback'      => 'get_sekelebat_webinfo',
+			'get_callback'      => 'get_sekelebat_comment_list',
 			'update_callback'   => null,
 			'schema'            => null
 		)

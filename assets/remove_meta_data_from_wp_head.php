@@ -13,11 +13,12 @@ function remove_all_wpseo_og() {
 // Remove Yoast Meta SEO will call using react-helmet
 function sekelebat_remove_yoast_meta($filter){
 	return false;
-}
-add_filter( 'wpseo_title', 'sekelebat_remove_yoast_meta');
+}add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
+/*add_filter( 'wpseo_title', 'sekelebat_remove_yoast_meta');
 add_filter( 'wpseo_output_twitter_card', 'sekelebat_remove_yoast_meta');
 add_filter( 'wpseo_robots', 'sekelebat_remove_yoast_meta');
 add_filter( 'wpseo_canonical', 'sekelebat_remove_yoast_meta');
 add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_json_ld_output', 'sekelebat_remove_yoast_meta');*/
 
 ?>
