@@ -497,3 +497,8 @@ img{
 #comments [id^="div-comment-"] {
     margin-bottom: 20px;
 }
+
+.comment-awaiting-moderation{
+    position: absolute;
+    font-size: 10px;
+}
