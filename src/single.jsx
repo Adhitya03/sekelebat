@@ -8,6 +8,7 @@ import Pagemeta from "./component/wp-head/page-meta";
 import Loading from "./component/loading";
 import NotFound from "./component/404";
 import Comment from "./comments";
+import ReactDOM from "react-dom";
 
 class Single extends Component {
 
@@ -26,10 +27,38 @@ class Single extends Component {
 
     componentDidUpdate() {
         this.fetchPost();
+        this.getCommentReply();
     }
 
     componentDidMount() {
         this.fetchPost();
+        this.getCommentReply();
+    }
+
+    getCommentReply(){
+        const comment_reply = document.querySelectorAll(".comment-reply-link");
+        comment_reply.forEach( function ( el ) {
+
+            const f = document.createElement("form");
+            f.setAttribute('method',"post");
+            f.setAttribute('action',"submit.php");
+
+            const i = document.createElement("input"); //input element, text
+            i.setAttribute('type',"text");
+            i.setAttribute('name',"username");
+
+            const s = document.createElement("input"); //input element, Submit button
+            s.setAttribute('type',"submit");
+            s.setAttribute('value',"Submit");
+
+            f.appendChild(i);
+            f.appendChild(s);
+
+            el.addEventListener( 'click', function (e) {
+                console.log(e.target.attributes['data-belowelement'].nodeValue);
+                document.getElementById(e.target.attributes['data-belowelement'].nodeValue).appendChild( f );
+            } )
+        } )
     }
 
     fetchPost(){
