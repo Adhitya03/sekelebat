@@ -8,7 +8,6 @@ import Pagemeta from "./component/wp-head/page-meta";
 import Loading from "./component/loading";
 import NotFound from "./component/404";
 import Comment from "./comments";
-import ReactDOM from "react-dom";
 
 class Single extends Component {
 
@@ -39,64 +38,32 @@ class Single extends Component {
         this.fetchPost();
     }
 
-    commentForm( comment_post_ID,  comment_parent, data_belowelement){
+    commentForm( comment_id, comment_post_ID,  comment_parent ){
+        return '<form id="' + comment_id + '" method="post" action="' + SekelebatSettings.domain + 'wp-comments-post.php">' +
+                    '<textarea name="comment" cols="30" rows="10"></textarea>' +
+                    '<input type="text" name="author">' +
+                    '<input type="text" name="email">' +
+                    '<input type="text" name="url">' +
+                    '<input type="hidden" name="comment_post_ID" value="' + comment_post_ID + '">' +
+                    '<input type="hidden" name="comment_parent" value="' + comment_parent + '">' +
+                    '<input type="submit" name="submit" value="Submit">' +
+                '</form>';
+    }
+
+    addCommentForm( comment_post_ID,  comment_parent, data_belowelement){
         // Check if there is a comment form opened, remove it form
-        const element = document.getElementById("sekelebat-comment-form");
+        const element = document.getElementById("sekelebat-comment-form-child");
         if( element !== null ){
-            element.remove( element );
+            element.remove();
         }
-
-        const f = document.createElement("form");
-        f.setAttribute('id',"sekelebat-comment-form");
-        f.setAttribute('method',"post");
-        f.setAttribute('action',"http://www.reactwordpressid.com/wp-comments-post.php");
-
-        const i = document.createElement("textarea"); //textarea element, text
-        i.setAttribute('name',"comment");
-
-        const a = document.createElement("input"); //input element, text
-        a.setAttribute('type',"text");
-        a.setAttribute('name',"author");
-
-        const em = document.createElement("input"); //input element, text
-        em.setAttribute('type',"email");
-        em.setAttribute('name',"email");
-
-        const u = document.createElement("input"); //input element, text
-        u.setAttribute('type',"url");
-        u.setAttribute('name',"url");
-
-        const pid = document.createElement("input"); //input element, text
-        pid.setAttribute('type',"hidden");
-        pid.setAttribute('name',"comment_post_ID");
-        pid.setAttribute('value', comment_post_ID);
-
-        const cid = document.createElement("input"); //input element, text
-        cid.setAttribute('type',"hidden");
-        cid.setAttribute('name',"comment_parent");
-        cid.setAttribute('value', comment_parent);
-
-        const s = document.createElement("input"); //input element, Submit button
-        s.setAttribute('type',"submit");
-        s.setAttribute('name',"submit");
-        s.setAttribute('value',"Submit");
-
-        f.appendChild(i);
-        f.appendChild(a);
-        f.appendChild(em);
-        f.appendChild(u);
-        f.appendChild(pid);
-        f.appendChild(cid);
-        f.appendChild(s);
-
-        document.getElementById(data_belowelement).appendChild( f );
+        document.getElementById(data_belowelement).insertAdjacentHTML( 'beforeend' ,this.commentForm( 'sekelebat-comment-form-child', comment_post_ID,  comment_parent  ));
     }
 
     addEventListenetCommentReply(){
         const comment_reply = document.querySelectorAll(".comment-reply-link");
         comment_reply.forEach(  el => {
             el.addEventListener( 'click', e => {
-                this.commentForm( e.target.attributes['data-postid'].nodeValue, e.target.attributes['data-commentid'].nodeValue, e.target.attributes['data-belowelement'].nodeValue );
+                this.addCommentForm( e.target.attributes['data-postid'].nodeValue, e.target.attributes['data-commentid'].nodeValue, e.target.attributes['data-belowelement'].nodeValue );
             })
         } )
     }
@@ -195,6 +162,7 @@ class Single extends Component {
                 <article id="single-post" className="col-12 col-md-9">
                     {content}
                     {comment}
+                    <div dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
                 </article>
             </Aux>
         );
