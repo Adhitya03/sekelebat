@@ -10,11 +10,16 @@ const pageMeta = ( props ) => {
                 <meta key={props.metaData[el]['name']} name={props.metaData[el]['name']} content={props.metaData[el]['content']}/>
             );
         }else if(Object.keys(props.metaData[el])[0] === 'property'){
+            if( props.metaData[el]['property'] === "og:title" ){
+                title = props.metaData[el]['content'];
+            }
             return (
                 <meta key={props.metaData[el]['property']} property={props.metaData[el]['property']} content={props.metaData[el]['content']}/>
             );
-        }else{
-            title = props.metaData[el]['pageTitle'];
+        }
+
+        if( title === '' ){
+            title = props.metaData[props.metaData.length-1].pageTitle + ' - ' + SekelebatSettings.title;
         }
     });
 

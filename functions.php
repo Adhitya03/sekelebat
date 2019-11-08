@@ -3,25 +3,53 @@
 // requiring  file
 require get_template_directory() . '/assets/required-plugin.php';
 require get_template_directory() . '/assets/theme-update-checker.php';
-//require get_template_directory() . '/assets/remove_meta_data_from_wp_head.php';
 
+/* Remove All Yoast SEO OpenGraph Output
+ * There is an on/off switch in the plugin Admin > SEO > Social > Facebook
+ * Credit: Unknown
+ * Last Tested: Apr 01 2017 using Yoast SEO 4.5 on WordPress 4.7.3
+ */
+function remove_all_wpseo_og() {
+	remove_action( 'wpseo_head', array( $GLOBALS['wpseo_og'], 'opengraph' ), 30 );
+}
+add_action('wp_head', 'remove_all_wpseo_og', 1);
 
+// Remove Yoast Meta SEO from wp_head() and will call using react-helmet
+function sekelebat_remove_yoast_meta($filter){
+	return false;
+}
+add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_title', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_output_twitter_card', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_robots', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_canonical', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_metadesc', 'sekelebat_remove_yoast_meta');
+add_filter( 'wpseo_json_ld_output', 'sekelebat_remove_yoast_meta');
+// Remove title generate by WordPress in wp_head()
+remove_action('wp_head', '_wp_render_title_tag', '1');
+
+// Theme update checker, user will get update notif to update the theme
 $example_update_checker = new ThemeUpdateChecker(
 	'sekelebat',
 	'https://adhityar.com/themedir/sekelebat.json'
 );
 
-// Remove title
-remove_action('wp_head', '_wp_render_title_tag', '1');
-
 // Rewrite archives url
-add_action( 'init', 'rewritePostTypeArchive' );
-function rewritePostTypeArchive() {
+function rewrite_archive_link_structure() {
 	global $wp_rewrite;
 	return $wp_rewrite->date_structure = 'archives/%year%/%monthnum%/%day%';
 }
+add_action( 'init', 'rewrite_archive_link_structure' );
 
-
+function setting_params_archive( $query_params ) {
+	$query_params['date_query_column'] = [
+		'description' => __( 'The date query column.' ),
+		'type'        => 'string',
+		'enum'        => [ 'post_date', 'post_date_gmt', 'post_modified', 'post_modified_gmt', 'comment_date', 'comment_date_gmt' ],
+	];
+	return $query_params;
+}
+add_filter( 'rest_post_collection_params', 'setting_params_archive' );
 
 function sekelebat_load_scripts() {
 	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', '', '4.3.1', 'all');
@@ -37,6 +65,7 @@ function sekelebat_load_scripts() {
 	if( !empty( $custom_logo_id ) ){
 		$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 	}
+
 	wp_scripts()->add_data( 'sekelebat-script', 'data', sprintf( 'var SekelebatSettings = %s;', wp_json_encode( array(
 		'title' => get_bloginfo( 'name', 'display' ),
 		'description' => get_bloginfo( 'description', 'display' ),
@@ -128,15 +157,6 @@ function sekelebat_post_archive( $args, $request ) {
 	return $args;
 }
 add_filter( 'rest_post_query', 'sekelebat_post_archive' , 10, 2 );
-
-add_filter( 'rest_post_collection_params', function( $query_params ) {
-	$query_params['date_query_column'] = [
-		'description' => __( 'The date query column.' ),
-		'type'        => 'string',
-		'enum'        => [ 'post_date', 'post_date_gmt', 'post_modified', 'post_modified_gmt', 'comment_date', 'comment_date_gmt' ],
-	];
-	return $query_params;
-} );
 
 function get_sekelebat_get_author_name( $object, $field_name, $request ) {
 	return get_the_author_meta( 'display_name' );
