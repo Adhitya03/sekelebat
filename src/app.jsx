@@ -11,8 +11,6 @@ import Archive from './archive';
 import Search from './search';
 import Sidebar from './sidebar';
 
-import './style.css';
-
 const App = () => (
     <Aux>
         <Header />

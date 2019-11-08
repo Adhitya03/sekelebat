@@ -54,6 +54,7 @@ add_filter( 'rest_post_collection_params', 'setting_params_archive' );
 function sekelebat_load_scripts() {
 	wp_enqueue_style( 'bootstrap-style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', '', '4.3.1', 'all');
 	wp_enqueue_style( 'fontawesome-style', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css', '', '5.3.1', 'all');
+	wp_enqueue_style( 'sekelebat-css', get_template_directory_uri().'/style.css', array(), '1.0.0', 'all' );
 
 	wp_enqueue_script( 'sekelebat-script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), '1.0', true );
 	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array( 'jquery' ), '4.3.1', true );
