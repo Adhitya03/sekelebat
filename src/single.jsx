@@ -145,7 +145,7 @@ class Single extends Component {
                     {content}
                     {comment}
                     <h4>Join the Conversation </h4>
-                    <div dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
+                    <div id="comment-form" dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
                 </article>
             </Aux>
         );

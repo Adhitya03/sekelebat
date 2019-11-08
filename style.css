@@ -474,6 +474,10 @@ img{
 /* ==========================================================================
    Comments Area
    ========================================================================== */
+#comments [id^="div-comment-"] {
+    margin-bottom: 20px;
+}
+
 #comments h3{
     color: #222;
     font-weight: 700;
@@ -510,8 +514,8 @@ img{
     font-weight: 500;
 }
 
-#comments [id^="div-comment-"] {
-    margin-bottom: 20px;
+#comment-form input[type="submit"] {
+    border: 1px solid #ced4da;
 }
 
 .comment-awaiting-moderation{
