@@ -40,18 +40,32 @@ class Single extends Component {
 
     commentForm( comment_id, comment_post_ID,  comment_parent ){
         return '<form id="' + comment_id + '" method="post" action="' + SekelebatSettings.domain + 'wp-comments-post.php">' +
-                    '<textarea name="comment" cols="30" rows="10"></textarea>' +
-                    '<input type="text" name="author">' +
-                    '<input type="text" name="email">' +
-                    '<input type="text" name="url">' +
+                    '<div class="form-group">' +
+                        '<label>Comment *</label>' +
+                        '<textarea class="form-control" name="comment" cols="30" rows="3" required></textarea>' +
+                    '</div>' +
+                    '<div class="form-row">' +
+                        '<div class="col-md-6 col-12 mb-3">' +
+                            '<label>Name *</label>' +
+                            '<input class="form-control" type="text" name="author" required>' +
+                        '</div>' +
+                        '<div class="col-md-6 col-12 mb-3">' +
+                            '<label>Email *</label>' +
+                            '<input class="form-control" type="text" name="email" required>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label>Website</label>' +
+                        '<input class="form-control" type="text" name="url">' +
+                    '</div>' +
+                    '<input class="btn btn-light" type="submit" name="submit" value="Submit">' +
                     '<input type="hidden" name="comment_post_ID" value="' + comment_post_ID + '">' +
                     '<input type="hidden" name="comment_parent" value="' + comment_parent + '">' +
-                    '<input type="submit" name="submit" value="Submit">' +
                 '</form>';
     }
 
-    addCommentForm( comment_post_ID,  comment_parent, data_belowelement){
-        // Check if there is a comment form opened, remove it form
+    commentFormHandler( comment_post_ID,  comment_parent, data_belowelement){
+        // Check if there is a comment form opened, remove it
         const element = document.getElementById("sekelebat-comment-form-child");
         if( element !== null ){
             element.remove();
@@ -63,7 +77,7 @@ class Single extends Component {
         const comment_reply = document.querySelectorAll(".comment-reply-link");
         comment_reply.forEach(  el => {
             el.addEventListener( 'click', e => {
-                this.addCommentForm( e.target.attributes['data-postid'].nodeValue, e.target.attributes['data-commentid'].nodeValue, e.target.attributes['data-belowelement'].nodeValue );
+                this.commentFormHandler( e.target.attributes['data-postid'].nodeValue, e.target.attributes['data-commentid'].nodeValue, e.target.attributes['data-belowelement'].nodeValue );
             })
         } )
     }
@@ -162,6 +176,7 @@ class Single extends Component {
                 <article id="single-post" className="col-12 col-md-9">
                     {content}
                     {comment}
+                    <h4>Join the Conversation </h4>
                     <div dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
                 </article>
             </Aux>
