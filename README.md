@@ -5,17 +5,17 @@ Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at somet
 
 ### Installing and beginning development
 
-1. Install webpack in you laptop
-2. Clone or fork this project to your wp-content/theme/
+1. Install webpack in your laptop
+2. Clone (or fork) this project to your wp-content/theme/
 3. move to sekelebat's folder
-4. If you installed Git, click right > git bash here 
+4. If you had installed Git in your laptop, Right-Click > git bash here 
 5. npm install
 6. npm run build
 7. Open your wp-admin > Appearances > Themes > Activate Sekelebat
 
 ### Support
 
-If you like this theme and want to join to develop this theme, please make a pull request or report an issue. Thank you for contributing to Sekelebat! 
+If you like this theme and want to join in developing it, please make a pull request or report an issue. Thank you for contributing to Sekelebat! 
 
 ## For WordPress Users
 
