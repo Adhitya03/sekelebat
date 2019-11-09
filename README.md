@@ -1,5 +1,5 @@
 # Sekelebat
-Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light, just like this theme can do. Sekelebat is WordPress theme using ReactJs.
+Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light, just like this theme can do. Sekelebat is a WordPress theme using ReactJs.
 
 ## For Developers
 
