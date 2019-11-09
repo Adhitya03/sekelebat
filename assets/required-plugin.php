@@ -66,19 +66,9 @@ function sekelebat_register_required_plugins() {
 			'required'  => true,
 		),
 
-		/*array(
+		array(
 			'name'      => 'WP REST Yoast Meta',
 			'slug'      => 'wp-rest-yoast-meta',
-			'required'  => true,
-		),*/
-
-		// This is an example of how to include a plugin from a GitHub repository in your theme.
-		// This presumes that the plugin code is based in the root of the GitHub repository
-		// and not in a subdirectory ('/src') of the repository.
-		array(
-			'name'      => 'Yoast to REST API - WordPress plugin',
-			'slug'      => 'wp-api-yoast-meta',
-			'source'    => 'https://github.com/ChazUK/wp-api-yoast-meta/archive/master.zip',
 			'required'  => true,
 		),
 

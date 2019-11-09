@@ -58,7 +58,7 @@ class Single extends Component {
                         '<label>Website</label>' +
                         '<input class="form-control" type="text" name="url">' +
                     '</div>' +
-                    '<input class="btn btn-light" type="submit" name="submit" value="Submit">' +
+                    '<input id="comment-submit-botton" class="btn btn-light" type="submit" name="submit" value="Submit">' +
                     '<input type="hidden" name="comment_post_ID" value="' + comment_post_ID + '">' +
                     '<input type="hidden" name="comment_parent" value="' + comment_parent + '">' +
                 '</form>';
@@ -145,7 +145,7 @@ class Single extends Component {
                     {content}
                     {comment}
                     <h4>Join the Conversation </h4>
-                    <div id="comment-form" dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
+                    <div dangerouslySetInnerHTML={{ __html: this.commentForm( 'sekelebat-comment-form-post', this.state.post.id, 0 ) }}/>
                 </article>
             </Aux>
         );

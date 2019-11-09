@@ -3,11 +3,11 @@ Theme Name: Sekelebat
 Theme URI: https://adhityar.com/
 Author: Adhitya03
 Author URI: https://profiles.wordpress.org/adhitya03/
-Description: Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light. And yeah, this is a WordPress theme that will make your website very fast. It's because ReactJs. So this is WordPress theme with ReactJs.
+Description: WordPress theme using ReactJs and Webpack.
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: black, gray, white, maroon
+Tags: blog, two-columns, right-sidebar, custom-logo, custom-menu, featured-images, footer-widgets, theme-options, decoupled, react, rest-api
 */
 
 @import url('https://fonts.googleapis.com/css?family=Nunito|Open+Sans&display=swap');
@@ -514,7 +514,7 @@ img{
     font-weight: 500;
 }
 
-#comment-form input[type="submit"] {
+#comment-submit-botton {
     border: 1px solid #ced4da;
 }
 

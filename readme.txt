@@ -1,41 +1,16 @@
-# Sekelebat
-Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light, just like this theme can do. Sekelebat is WordPress theme using ReactJs.
+=== Sekelebat ===
+Contributors: adhitya03
+Requires at least: 5.0
+Tested up to: 5.2.4
+Requires PHP: 5.6
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: blog, two-columns, right-sidebar, custom-logo, custom-menu, featured-images, footer-widgets, theme-options, decoupled, react, rest-api
 
-## For Developers
-
-### Installing and beginning development
-
-1. Install webpack in you laptop
-2. Clone or fork this project to your wp-content/theme/
-3. move to sekelebat's folder
-4. If you installed Git, click right > git bash here 
-5. npm install
-6. npm run build
-7. Open your wp-admin > Appearances > Themes > Activate Sekelebat
-
-### Support
-
-If you like this theme and want to join to develop this theme, please make a pull request or report an issue. Thank you for contributing to Sekelebat! 
-
-## For WordPress Users
-
-* [Demo](https://sekelebat.adhityar.com/) - Theme Demo
-* [Download](https://www.adhityar.com/themedir/sekelebat.zip) - Theme File
-
-### Theme Details
-
-Contributors: adhitya03<br/>
-Requires at least: 5.0<br/>
-Tested up to: 5.2.4<br/>
-Requires PHP: 5.6<br/>
-License: GPLv2 or later<br/>
-License URI: http://www.gnu.org/licenses/gpl-2.0.html<br/>
-Tags: blog, two-columns, right-sidebar, custom-logo, custom-menu, featured-images, footer-widgets, theme-options, decoupled, react, rest-api<br/>
-
+WordPress theme using ReactJs and Webpack.
 
 == Description ==
-
-Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light, just like this theme can do. Sekelebat is WordPress theme using ReactJs.
+Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that moving so fast, just like a flash of light, just like this theme can do.
 
 == Installation ==
 
