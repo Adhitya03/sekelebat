@@ -12,7 +12,11 @@ class Header extends Component{
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextState.menus !== this.state.menus;
+        //return nextState.menus !== this.state.menus;
+        if (this.state.menus !== nextState.menus) {
+            return true;
+        }
+        return false;
     }
 
     componentDidMount() {
