@@ -1,22 +1,6 @@
 # Sekelebat
 Sekelebat is a word from Java, Indonesia. It's mean like when eyes look at something that is moving so fast, just like a flash of light, just like this theme can do. Sekelebat is a WordPress theme using ReactJs.
 
-## For Developers
-
-### Installing and beginning development
-
-1. Install webpack in your laptop
-2. Clone (or fork) this project to your wp-content/theme/
-3. move to sekelebat's folder
-4. If you had installed Git in your laptop, Right-Click > git bash here 
-5. npm install
-6. npm run build
-7. Open your wp-admin > Appearances > Themes > Activate Sekelebat
-
-### Support
-
-If you like this theme and want to join in developing it, please make a pull request or report an issue. Thank you for contributing to Sekelebat! 
-
 ## For WordPress Users
 
 * [Demo](https://sekelebat.adhityar.com/) - Theme Demo
@@ -31,7 +15,6 @@ Requires PHP: 5.6<br/>
 License: GPLv2 or later<br/>
 License URI: http://www.gnu.org/licenses/gpl-2.0.html<br/>
 Tags: blog, two-columns, right-sidebar, custom-logo, custom-menu, featured-images, footer-widgets, theme-options, decoupled, react, rest-api<br/>
-
 
 == Description ==
 
@@ -88,3 +71,19 @@ Source: http://fontawesome.io/
 Blog Post Image
 License: CC0 licensed
 Source: https://stocksnap.io/photo/BZ4FJO6KZE
+
+## For Developers
+
+### Installing and beginning development
+
+1. Install webpack in your laptop
+2. Clone (or fork) this project to your wp-content/theme/
+3. move to sekelebat's folder
+4. If you had installed Git in your laptop, Right-Click > git bash here 
+5. npm install
+6. npm run build
+7. Open your wp-admin > Appearances > Themes > Activate Sekelebat
+
+### Support
+
+If you like this theme and want to join in developing it, please make a pull request or report an issue. Thank you for contributing to Sekelebat! 
